@@ -6,7 +6,6 @@ class Produto < ApplicationRecord
   validates :nome, presence: true
   validates :descricao, presence: true
   validates :preco, presence: true
-  validates :imagem, presence: true
   validates :nota, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
   validates :emEstoque, presence: true
   validates :emPromocao, inclusion: { in: [true, false] }

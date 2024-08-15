@@ -1,6 +1,6 @@
 class Pedido < ApplicationRecord
-  belongs_to :carrinho, class_name: "carrinho", foreign_key: "carrinho_id"
-  has_one :produto
+  belongs_to :cliente
+  belongs_to :produto
   validates :quantidade, presence: true
 
   private

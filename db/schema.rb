@@ -56,12 +56,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
   end
 
   create_table "pedidos", force: :cascade do |t|
-    t.bigint "carrinho_id", null: false
+    t.bigint "cliente_id", null: false
     t.bigint "produto_id", null: false
     t.integer "quantidade", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["carrinho_id"], name: "index_pedidos_on_carrinho_id"
+    t.index ["cliente_id"], name: "index_pedidos_on_cliente_id"
     t.index ["produto_id"], name: "index_pedidos_on_produto_id"
   end
 
@@ -77,7 +77,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
   create_table "produtos", force: :cascade do |t|
     t.bigint "vendedor_id", null: false
     t.bigint "categorium_id", null: false
-    t.binary "imagem"
     t.string "nome", null: false
     t.text "descricao", null: false
     t.float "nota", default: 0.0
@@ -141,7 +140,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
   add_foreign_key "clientes", "users"
   add_foreign_key "historicos", "clientes"
   add_foreign_key "historicos", "pedidos"
-  add_foreign_key "pedidos", "carrinhos"
+  add_foreign_key "pedidos", "clientes"
   add_foreign_key "pedidos", "produtos"
   add_foreign_key "produto_em_promos", "produtos"
   add_foreign_key "produtos", "categoria"

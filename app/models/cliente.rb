@@ -1,7 +1,9 @@
 class Cliente < ApplicationRecord
   after_initialize :set_default_saldo, if: :new_record?
+  after_initialize :create_default_carrinho, if: :new_record?
 
-  belongs_to :user, class_name: "User", foreign_key: "user_id"
+  belongs_to :user
+  has_many :pedidos
   has_one :carrinho
   has_one :historico
   has_many :review
@@ -11,6 +13,9 @@ class Cliente < ApplicationRecord
   validates :saldo, numericality: { greater_than_or_equal_to: 0.00 }
 
   private
+  def create_default_carrinho
+    self.build_carrinho if carrinho.nil?
+  end
 
   def set_default_saldo
     self.saldo ||= 0.0

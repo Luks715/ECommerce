@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get 'exibir_imagem'
     end
   end
+  post 'criar_pedido', to: 'pedidos#create'
 
   get 'home_user', to: 'pages#home_user', as: 'home_user'
   get 'search', to: 'pages#search', as: 'search_pages'

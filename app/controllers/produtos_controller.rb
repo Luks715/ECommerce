@@ -5,6 +5,7 @@ class ProdutosController < ApplicationController
   end
 
   def show
+    @promocao = ProdutoEmPromo.find_by(produto_id: @produto.id)
   end
 
   def exibir_imagem
