@@ -10,16 +10,17 @@ class PagesController < ApplicationController
 
   def home_user
     @produtos = Produto.all
+    @categoria = Categorium.all
+    @vendedores = Vendedor.all
+
     if user_signed_in?
       @usuario = User.find_by(id: current_user.id)
 
       if @usuario.Cliente?
         @cliente = Cliente.find_by(user_id: @usuario.id)
         @carrinho = Carrinho.find_by(cliente_id: @cliente.id)
-        @vendedores = ClienteVendedor.where(cliente_id: @cliente.id)
 
       elsif @usuario.Vendedor?
-        @vendedor = Vendedor.find_by(user_id: @usuario.id)
         @produtos = Produtos.where(vendedor_id: @vendedor.id)
 
       else

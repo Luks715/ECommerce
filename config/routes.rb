@@ -8,12 +8,15 @@ Rails.application.routes.draw do
   resources :vendedors
   resources :user
   resources :reviews
-  resources :produtos
+  resources :produtos do
+    member do
+      get 'exibir_imagem'
+    end
+  end
 
   get 'home_user', to: 'pages#home_user', as: 'home_user'
   get 'search', to: 'pages#search', as: 'search_pages'
   root to: "pages#home_user"
-
 
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

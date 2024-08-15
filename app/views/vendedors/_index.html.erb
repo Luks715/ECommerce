@@ -1,1 +1,5 @@
-todos os vendedores
+<ul>
+  <% vendedores.each do |vendedor| %>
+    <li><%= link_to "#{vendedor.user.nome}", vendedor_path(vendedor) %></li>
+  <% end %>
+</ul>

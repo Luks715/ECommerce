@@ -1,1 +1,5 @@
-todas as categorias
+<ul>
+  <% categoria.each do |categorium| %>
+    <li><%= link_to "#{categorium.nome}", categorium_path(categorium) %></li>
+  <% end %>
+</ul>

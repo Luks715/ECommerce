@@ -54,11 +54,11 @@
             </div>
 
             <div class="vendedores_index" id="vendedores_content">
-                <%= render partial: "vendedors/index" %>
+                <%= render partial: "vendedors/index", locals: { vendedores: @vendedores} %>
             </div>
 
             <div class="categorium_index" id="categorium_content">
-                <%= render partial: "categoria/index" %>
+                <%= render partial: "categoria/index", locals: { categoria: @categoria} %>
             </div>
         </div>
     </div>

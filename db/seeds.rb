@@ -50,9 +50,12 @@ categorias = ["Eletrônicos", "Roupas", "Alimentos"]
 categorias.each do |nome_categoria|
   Categorium.create!(nome: nome_categoria)
 end
+image_path = Rails.root.join('app', 'assets', 'images', 'windows_!_icon.png')
+
 Produto.create!(
   nome: "carro de controle remoto",
   preco: 100,
+  imagem: File.binread(Rails.root.join('app', 'assets', 'images', 'windows_!_icon.png')),
   descricao: "aaaaaaaaaaa",
   categorium: Categorium.find_by(nome: "Eletrônicos"),
   emEstoque: 5,
@@ -63,6 +66,7 @@ Produto.create!(
 Produto.create!(
   nome: "carro de madeira",
   preco: 101,
+  imagem: File.binread(Rails.root.join('app', 'assets', 'images', 'windows_!_icon.png')),
   descricao: "aaaaaaaaaaa",
   categorium: Categorium.find_by(nome: "Eletrônicos"),
   emEstoque: 5,
@@ -73,6 +77,7 @@ Produto.create!(
 Produto.create!(
   nome: "carro",
   preco: 102,
+  imagem: File.binread(Rails.root.join('app', 'assets', 'images', 'windows_!_icon.png')),
   descricao: "aaaaaaaaaaa",
   categorium: Categorium.find_by(nome: "Eletrônicos"),
   emEstoque: 5,
@@ -83,6 +88,7 @@ Produto.create!(
 Produto.create!(
   nome: "fantasia do batman",
   preco: 102,
+  imagem: File.binread(Rails.root.join('app', 'assets', 'images', 'windows_!_icon.png')),
   descricao: "aaaaaaaaaaa",
   categorium: Categorium.find_by(nome: "Roupas"),
   emEstoque: 5,
@@ -93,13 +99,12 @@ Produto.create!(
 Produto.create!(
   nome: "fantasia do superman",
   preco: 104,
+  imagem: File.binread(Rails.root.join('app', 'assets', 'images', 'windows_!_icon.png')),
   descricao: "aaaaaaaaaaa",
   categorium: Categorium.find_by(nome: "Roupas"),
   emEstoque: 5,
   emPromocao: false,
   vendedor: vendedor
 )
-
-
 
 puts "Seeds carregados com sucesso!"
