@@ -1,0 +1,19 @@
+<div class="search_bar">
+  <%= form_with url: search_pages_path, method: :get, remote: true do |form| %>
+    <%= form.text_field :q, placeholder: "Pesquisar produtos..." %>
+    <%= form.submit "Buscar" %>
+  <% end %>
+</div>
+<div class="lista-produtos">
+  <ul>
+    <% produtos.each do |produto| %>
+      <li>
+        <div class="item-lista">
+          <img src="<%= asset_path('folder_icon.png') %>" alt="iconezinho windows">
+          <%= link_to "#{produto.nome}", produto_path(produto) %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<%= link_to 'Voltar', home_user_path, class: 'button' %>

@@ -1,0 +1,72 @@
+<div class="profile">
+    <div class="barra_azul">
+        <div class="titulo">
+            <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
+                        
+            <%= ". Área do Usuário"%>
+            <div class="botao-exit">
+                <button>
+                    <span>X</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile_content">
+        <%if user_signed_in?%>
+            <div class="bem_vindo">
+                <%= "Bem vindo, #{@usuario.nome}"%>
+            </div>
+            <%= link_to 'Carrinho', carrinho_path(@cliente.carrinho.id)%>
+            <%= link_to 'Seu perfil', user_path(@usuario.id) %>
+            <%= button_to "sair", destroy_user_session_path, method: :delete%>
+        <%else %>
+            <%= "Você está no modo visitante"%>
+            <%= link_to "Login", new_user_session_path %>
+            <%= link_to "Criar conta", new_user_registration_path %>
+        <%end%>
+    </div>
+</div>
+
+<div class="main">
+    <div class="barra_azul">
+        <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
+                        
+        <%= ". ECommerce+"%>
+
+        <div class="botao-exit">
+            <button>
+                <span>X</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="main_content">
+        <div class="main_content_menu">
+            <button type="button" class="button" id="btn_produtos_index">Produtos</button>
+            <button type="button" class="button" id="btn_categoria_index">Categorias</button>
+            <button type="button" class="button" id="btn_vendedores_index">Vendedores</button>
+        </div>
+
+        <div class="main_content_render">
+            <div class="produtos_index" id="produtos_content">
+                <%= render partial: 'produtos/index', locals: { produtos: @produtos} %>
+            </div>
+
+            <div class="vendedores_index" id="vendedores_content">
+                <%= render partial: "vendedors/index" %>
+            </div>
+
+            <div class="categorium_index" id="categorium_content">
+                <%= render partial: "categoria/index" %>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div>
+        <img src="<%= asset_path('windows-logo.png') %>" alt="logo windows">
+    </div>
+</div>
+
+<%= javascript_include_tag 'partials_index.js' %>
