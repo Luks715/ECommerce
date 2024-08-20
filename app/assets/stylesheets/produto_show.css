@@ -1,6 +1,7 @@
 .produto_show{
     display: flex;
-    margin: 10px 0 0 180px;
+    justify-content: center;
+    margin: 0 0 0 180px;
 }
 .produto_show .janela_reviews{
     margin: 20px 0 0 0;
@@ -11,7 +12,7 @@
 .janela_produto{
     padding: 12px;
     width: 500px;
-    height: 400px;
+    height: 300px;
     margin: 20px;
 
     background-color: #bdbdbd;
@@ -31,14 +32,18 @@
     position: relative;
     display: flex;
 }
+.janela_produto .janela_produto_data .imagem .interacao{
+    display: flex;
+    flex-direction: column;
+}
 .janela_produto .janela_produto_data img{
     height: 180px;
     width: 200px;
     box-shadow: inset 2px 2px #000, 2px 2px #fff;
 }
 .janela_produto .janela_produto_data .data{
-    margin: 0 0 0 10px;
     width: 300px;
+    padding: 8px;
     display: flex;
     flex-direction: column;
 }

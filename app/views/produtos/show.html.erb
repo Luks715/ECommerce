@@ -16,13 +16,18 @@
         <div class="janela_produto_data">
             <div class="imagem">
                 <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
-                <%= link_to "Conheça o vendedor", vendedor_path(@vendedor)%>
-
-                <% if user_signed_in? && current_user.Cliente? %>
-                    <% if ClienteProduto.find_by(cliente: current_user.cliente, produto: @produto).present? %>
-                        <%= link_to "Escreva uma review", new_review_path(produto_id: @produto.id, vendedor_id: nil) %>
+                <div class="interacao">
+                    <% if user_signed_in? && current_user.Cliente? %>
+                        <%= link_to "Conheça o vendedor", vendedor_path(@vendedor)%>
+                        <% if ClienteProduto.find_by(cliente: current_user.cliente, produto: @produto).present? %>
+                            <%= link_to "Escreva uma review", new_review_path(produto_id: @produto.id, vendedor_id: nil) %>
+                        <% end %>
+                    <% elsif user_signed_in? && current_user.Vendedor? %>
+                        <% if current_user != @produto.vendedor.user %>
+                            <% link_to "Editar produto", edit_produto_path(@produto)%>
+                        <% end %>
                     <% end %>
-                <% end %>
+                </div>
             </div>
             <div class="data">
                 <div class="caixa_atributo_valor">
@@ -94,7 +99,7 @@
                 </div>
 
                 <% if user_signed_in? && current_user.Cliente?%>
-                    <% if @produto.emEstoque == 0 %>
+                    <% if @produto.emEstoque <= 0 %>
                         <div class="caixa_atributo_valor">
                             <div class="atributo">
                                 Produto fora do estoque 
@@ -116,10 +121,6 @@
                                 <%= form.submit 'Comprar', class: 'botao-comprar' %>
                             </div>
                         <% end %>
-                    <% end %>
-                <% elsif user_signed_in? && current_user.Vendedor? %>
-                    <% if current_user != @produto.vendedor.user %>
-                        <% link_to "Editar produto", edit_produto_path(@produto)%>
                     <% end %>
                 <% end %>
             </div>

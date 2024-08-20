@@ -4,7 +4,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable
-  enum role: {Cliente: 0, Vendedor: 1, Visitante: 2}
+
+  enum role: {Cliente: 0, Vendedor: 1}
 
   validates :nome, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
@@ -20,12 +21,5 @@ class User < ApplicationRecord
   private
   def create_default_carrinho
     self.build_carrinho if carrinho.nil?
-  end
-
-  def role_instance
-    return vendedor if vendedor?
-    return cliente if cliente?
-    return visitante if visitante?
-    nil
   end
 end
