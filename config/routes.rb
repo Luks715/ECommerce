@@ -8,15 +8,14 @@ Rails.application.routes.draw do
   resources :vendedors
   resources :user
   resources :reviews
-  resources :produtos do
-    member do
-      get 'exibir_imagem'
-    end
-  end
+  resources :produtos
+
   post 'criar_pedido', to: 'pedidos#create'
 
+  get 'acompanhar_entrega', to: 'pages#acompanhar_entrega', as: 'acompanhar_entrega'
   get 'home_user', to: 'pages#home_user', as: 'home_user'
   get 'search', to: 'pages#search', as: 'search_pages'
+
   root to: "pages#home_user"
 
 

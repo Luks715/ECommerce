@@ -1,0 +1,31 @@
+.carrinho_show{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.janela_carrinho{
+    padding: 12px;
+    width: 800px;
+    height: 500px;
+    margin: 20px;
+
+    background-color: #bdbdbd;
+    box-shadow: inset 2px 2px #fff, 2px 2px #000;
+}
+
+.janela_carrinho .tabela_pedidos{
+    padding: 5px;
+    background-color: #fff;
+    box-shadow: inset 2px 2px #000, 2px 2px #fff;
+}
+.janela_carrinho .tabela_pedidos .tabela{
+    overflow-y: auto;
+}
+.janela_carrinho .form-actions{
+    margin: 12px 0 0 0;
+}
+
+.janela_carrinho .form-actions .valor{
+    width: 95px;
+}

@@ -15,10 +15,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
   enable_extension "plpgsql"
 
   create_table "carrinhos", force: :cascade do |t|
-    t.bigint "cliente_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cliente_id"], name: "index_carrinhos_on_cliente_id"
+    t.index ["user_id"], name: "index_carrinhos_on_user_id"
   end
 
   create_table "categoria", force: :cascade do |t|
@@ -26,6 +26,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
     t.string "produto_mais_vendido"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "cliente_produtos", force: :cascade do |t|
+    t.bigint "cliente_id", null: false
+    t.bigint "produto_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_cliente_produtos_on_cliente_id"
+    t.index ["produto_id"], name: "index_cliente_produtos_on_produto_id"
   end
 
   create_table "cliente_vendedors", force: :cascade do |t|
@@ -47,31 +56,28 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
 
   create_table "historicos", force: :cascade do |t|
     t.bigint "cliente_id", null: false
-    t.bigint "pedido_id", null: false
-    t.date "dataDeCompra", null: false
+    t.bigint "produto_id", null: false
+    t.integer "quantidade", null: false
+    t.date "dataCompra", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cliente_id"], name: "index_historicos_on_cliente_id"
-    t.index ["pedido_id"], name: "index_historicos_on_pedido_id"
+    t.index ["produto_id"], name: "index_historicos_on_produto_id"
   end
 
   create_table "pedidos", force: :cascade do |t|
+    t.bigint "carrinho_id", null: false
     t.bigint "cliente_id", null: false
     t.bigint "produto_id", null: false
     t.integer "quantidade", null: false
+    t.boolean "foiPago", null: false
+    t.boolean "foiEnviado", null: false
+    t.date "dataCompra", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["carrinho_id"], name: "index_pedidos_on_carrinho_id"
     t.index ["cliente_id"], name: "index_pedidos_on_cliente_id"
     t.index ["produto_id"], name: "index_pedidos_on_produto_id"
-  end
-
-  create_table "produto_em_promos", force: :cascade do |t|
-    t.bigint "produto_id", null: false
-    t.integer "desconto", null: false
-    t.date "dataFim"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["produto_id"], name: "index_produto_em_promos_on_produto_id"
   end
 
   create_table "produtos", force: :cascade do |t|
@@ -82,7 +88,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
     t.float "nota", default: 0.0
     t.decimal "preco", precision: 10, scale: 2, null: false
     t.integer "emEstoque", null: false
-    t.boolean "emPromocao", default: false
+    t.integer "desconto", null: false
+    t.date "dataFim"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["categorium_id"], name: "index_produtos_on_categorium_id"
@@ -127,22 +134,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
   create_table "vendedors", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "emailParaContato", null: false
-    t.integer "totalVendas", null: false
-    t.float "nota", default: 0.0
+    t.decimal "carteira", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_vendedors_on_user_id"
   end
 
-  add_foreign_key "carrinhos", "clientes"
+  add_foreign_key "carrinhos", "users"
+  add_foreign_key "cliente_produtos", "clientes"
+  add_foreign_key "cliente_produtos", "produtos"
   add_foreign_key "cliente_vendedors", "clientes"
   add_foreign_key "cliente_vendedors", "vendedors"
   add_foreign_key "clientes", "users"
   add_foreign_key "historicos", "clientes"
-  add_foreign_key "historicos", "pedidos"
+  add_foreign_key "historicos", "produtos"
+  add_foreign_key "pedidos", "carrinhos"
   add_foreign_key "pedidos", "clientes"
   add_foreign_key "pedidos", "produtos"
-  add_foreign_key "produto_em_promos", "produtos"
   add_foreign_key "produtos", "categoria"
   add_foreign_key "produtos", "vendedors"
   add_foreign_key "reviews", "clientes"

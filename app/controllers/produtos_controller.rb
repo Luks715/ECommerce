@@ -5,7 +5,7 @@ class ProdutosController < ApplicationController
   end
 
   def show
-    @promocao = ProdutoEmPromo.find_by(produto_id: @produto.id)
+    @vendedor = @produto.vendedor
   end
 
   def exibir_imagem
@@ -13,14 +13,18 @@ class ProdutosController < ApplicationController
   end
 
   def new
+    @vendedor = current_user.vendedor
+    @categoria = Categorium.all
     @produto = Produto.new
   end
 
   def create
-    @produto = Produto.new(produto_params)
+    @produto = current_user.vendedor.produtos.build(produto_params)
     if @produto.save
-      redirect_to @produto, notice: 'Produto criado com sucesso.'
+      redirect_to vendedor_path(@produto.vendedor), notice: 'Produto criado com sucesso.'
     else
+      @vendedor = current_user.vendedor
+      @categoria = Categorium.all
       render :new
     end
   end
@@ -38,13 +42,13 @@ class ProdutosController < ApplicationController
 
   def destroy
     @produto.destroy
-    redirect_to home_user_path, notice: 'Dicente foi excluído com sucesso.'
+    redirect_to home_user_path, notice: 'Produto foi excluído com sucesso.'
   end
 
   private
 
   def produto_params
-    params.require(:produto).permit(:nome, :descricao, :preco, :categoria_id, :imagem, :emEstoque, :emPromocao)
+    params.require(:produto).permit(:nome, :descricao, :preco, :categorium_id, :emEstoque, :desconto, :dataFim)
   end
 
   def set_produto

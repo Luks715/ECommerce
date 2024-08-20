@@ -18,11 +18,10 @@ class PagesController < ApplicationController
 
       if @usuario.Cliente?
         @cliente = Cliente.find_by(user_id: @usuario.id)
-        @carrinho = Carrinho.find_by(cliente_id: @cliente.id)
-
+        @carrinho = Carrinho.find_by(user_id: @usuario.id)
       elsif @usuario.Vendedor?
-        @produtos = Produtos.where(vendedor_id: @vendedor.id)
-
+        @vendedor = Vendedor.find_by(user_id: @usuario.id)
+        @carrinho = Carrinho.find_by(user_id: @usuario.id)
       else
         @carrinho = []
       end

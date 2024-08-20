@@ -1,27 +1,39 @@
 class Carrinho < ApplicationRecord
-  belongs_to :cliente
+  belongs_to :user
   has_many :pedidos
-  private
 
   def calcular_total
     total = 0.0
-    pedidos.each do |pedido|
-      total += (pedido.quantidade) * (pedido.produto.preco)
+    self.pedidos.each do |pedido|
+      total += pedido.quantidade * pedido.produto.preco_promocional
     end
     total
   end
 
   def efetuar_pagamento
-    if cliente.saldo < calcular_total
+    novo_saldo = self.user.cliente.saldo - self.calcular_total
+    if novo_saldo < 0
       return false
     else
-      novo_saldo = cliente.saldo - calcular_total
-      cliente.update(saldo: novo_saldo)
-
-      pedidos.each do |pedido|
+      self.pedidos.each do |pedido|
+        produto = pedido.produto
+        produto.update(emEstoque: (produto.emEstoque - pedido.quantidade))
         vendedor = pedido.produto.vendedor
+        cliente = self.user.cliente
+
+        pedido.update(foiPago: true, dataCompra: Date.today)
+        vendedor.update(carteira: (vendedor.carteira + pedido.subTotal))
+
+        # Após a compra ser feita, o pedido do cliente passa para o carrinho do vendedor
+        vendedor.user.carrinho.pedidos << pedido
+
+        # Essas relações existem para saber quais produtos/vendedores o usuário pode avaliar,
+        # após o cliente fazer a avaliação, a instância é destruída.
         ClienteVendedor.find_or_create_by(cliente: cliente, vendedor: vendedor)
+        ClienteProduto.find_or_create_by(cliente: cliente, produto: produto)
       end
+
+      self.user.cliente.update(saldo: novo_saldo)
 
       true
     end

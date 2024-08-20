@@ -6,27 +6,38 @@ class Produto < ApplicationRecord
   validates :nome, presence: true
   validates :descricao, presence: true
   validates :preco, presence: true
-  validates :nota, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
   validates :emEstoque, presence: true
-  validates :emPromocao, inclusion: { in: [true, false] }
 
-  private
+  validates :desconto, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 
-  def calculate_nota
+  validate :data_fim_deve_ser_futura, if: -> { dataFim.present? }
+
+  def preco_promocional
+    if self.emPromocao
+      preco * (1 - desconto / 100.0)
+    else
+      self.update(desconto: 0, dataFim: nil)
+      preco
+    end
+  end
+
+  def emPromocao
+    (desconto > 0) && dataFim.present? && (Date.today <= dataFim)
+  end
+
+  def nota
     if reviews.any?
       somaNotas = reviews.sum(:nota)
-      self.nota = somaNotas / reviews.count.to_f
+      nota = somaNotas / reviews.count.to_f
     else
-      self.nota = 0
+      nota = 0
     end
-    self.save
+    nota.round(1)
   end
 
-  def imagem=(imagem_arquivo)
-    self[:imagem] = imagem_arquivo.read if imagem_arquivo.present?
-  end
-
-  def imagem_data
-    self[:imagem]
+  def data_fim_deve_ser_futura
+    if dataFim <= Date.today
+      errors.add(:dataFim, "deve ser uma data futura.")
+    end
   end
 end

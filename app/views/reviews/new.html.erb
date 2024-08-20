@@ -1,0 +1,46 @@
+<div class="janela_review">
+  <div class="barra_azul">
+    <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
+                        
+    <%=". Produto"%>
+
+    <div class="botao-exit">
+      <% if @vendedor.present? %>
+        <%= form_with url: vendedor_path(@vendedor), method: :get, local: true do %>
+          <button type="submit">
+            <span>X</span>
+          </button>
+        <% end %>
+      <% elsif @produto.present? %>
+        <%= form_with url: produto_path(@produto), method: :get, local: true do %>
+          <button type="submit">
+            <span>X</span>
+          </button>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="criar_review">
+    <%= form_with(model: @review, local: true) do |form| %>
+      <%= form.hidden_field :produto_id, value: @produto&.id %>
+      <%= form.hidden_field :vendedor_id, value: @vendedor&.id %>
+
+      <div class="caixa_atributo_valor">
+        <div class="atributo">
+          Nota
+        </div>
+
+       <%= form.number_field :nota, min: 1, max: 5 %>
+      </div>
+      Comentário
+      <div class="caixa_atributo_valor">
+        <%= form.text_area :comentario %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Criar Review" %>
+      </div>
+    <% end %>
+  </div>
+</div>

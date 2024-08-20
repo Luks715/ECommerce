@@ -3,8 +3,7 @@ class CreateVendedors < ActiveRecord::Migration[7.1]
     create_table :vendedors do |t|
       t.references :user, null: false, foreign_key: true
       t.string :emailParaContato, null: false
-      t.integer :totalVendas, null: false
-      t.float :nota, default: 0.0
+      t.decimal :carteira, precision: 10, scale: 2, default: 0.0, null: false
 
       t.timestamps
     end

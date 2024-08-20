@@ -1,5 +1,10 @@
-<ul>
-  <% vendedores.each do |vendedor| %>
-    <li><%= link_to "#{vendedor.user.nome}", vendedor_path(vendedor) %></li>
-  <% end %>
-</ul>
+<div class="lista-produtos">
+  <ul>
+   <% vendedores.each do |vendedor| %>
+      <div class="item-lista">
+        <img src="<%= asset_path('folder_icon.png') %>" alt="iconezinho windows">
+        <li><%= link_to "#{vendedor.user.nome}", vendedor_path(vendedor) %></li>
+      </div>
+    <% end %>
+  </ul>
+</div>

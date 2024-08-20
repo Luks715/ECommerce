@@ -7,23 +7,25 @@ class Vendedor < ApplicationRecord
   has_many :reviews
 
   validates :emailParaContato, presence: true
-  validates :totalVendas, numericality: { greater_than_or_equal_to: 0 }
-  validates :nota, presence: true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
+
+  def totalVendas
+    Pedido.where(carrinho: self.user.carrinho).count
+  end
+
+  def calcular_nota
+    relevant_reviews = reviews.where(produto_id: nil)
+    if relevant_reviews.any?
+      somaNotas = relevant_reviews.sum(:nota)
+      nota = somaNotas / relevant_reviews.count.to_f
+      nota.round(1)
+    else
+      0.0
+    end
+  end
 
   private
 
   def set_default_values
-    self.totalVendas ||= 0
-    self.nota ||= 0.0
-  end
-
-  def calculate_nota
-    if reviews.any?
-      somaNotas = reviews.sum(:nota)
-      self.nota = somaNotas / reviews.count.to_f
-    else
-      self.nota = 0
-    end
-    self.save
+    self.carteira ||= 0.0
   end
 end

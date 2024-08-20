@@ -4,12 +4,30 @@ class PedidosController < ApplicationController
   end
 
   def create
-    produto = Produto.find(params[:pedido][:produto_id]).id
+    produto = Produto.find(params[:pedido][:produto_id])
+    carrinho = Carrinho.find_by(user_id: current_user.id)
     quantidade = params[:pedido][:quantidade].to_i
     cliente = Cliente.find(params[:pedido][:cliente_id])
 
-    @pedido = Pedido.new(cliente_id: cliente.id, produto_id: produto, quantidade: quantidade)
-    cliente.pedidos << @pedido
+    if quantidade > produto.emEstoque
+      redirect_to produto_path(produto), alert: 'Quantidade excede o estoque'
+    end
+
+    pedidoExistente = Pedido.find_by(carrinho_id: current_user.carrinho.id, produto_id: produto.id)
+
+    if pedidoExistente.present?
+      pedidoExistente.destroy
+    end
+
+    @pedido = Pedido.new(
+      carrinho_id: carrinho.id,
+      produto: produto,
+      cliente_id: cliente.id,
+
+      quantidade: quantidade,
+      foiPago: false,
+      foiEnviado: false,
+      dataCompra: Date.today)
 
     if @pedido.save
       redirect_to root_path, notice: 'Pedido criado com sucesso.'
@@ -21,6 +39,6 @@ class PedidosController < ApplicationController
   private
 
   def pedido_params
-    params.require(:pedido).permit(:produto_id, :quantidade, :cliente_id)
+    params.require(:pedido).permit(:produto_id, :quantidade)
   end
 end

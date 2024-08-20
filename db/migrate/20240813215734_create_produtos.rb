@@ -9,7 +9,9 @@ class CreateProdutos < ActiveRecord::Migration[7.1]
       t.float :nota, default: 0.0
       t.decimal :preco, precision: 10, scale: 2, null: false
       t.integer :emEstoque, null: false
-      t.boolean :emPromocao, default: false
+
+      t.integer :desconto, null: false
+      t.date :dataFim
 
       t.timestamps
     end

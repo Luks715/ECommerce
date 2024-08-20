@@ -1,0 +1,88 @@
+<div class="vendedor_show">
+    <div class="janela_vendedor">
+        <div class="barra_azul">
+            <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
+                            
+            <%=". Cliente"%>
+            <div class="botao-exit">
+                <%= form_with url: home_user_path, method: :get, local: true do %>
+                    <button type="submit">
+                        <span>X</span>
+                    </button>
+                <% end %>
+            </div>
+        </div>
+
+        <div class="janela_vendedor_data">
+            <div class="imagem">
+                <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
+            </div>
+
+            <div class="data">
+                <div class="caixa_atributo_valor">
+                    <div class="atributo">
+                        Nome
+                    </div>
+                    <div class="valor">
+                        <%=" #{@usuario.nome}"%>
+                    </div>
+                </div>
+
+                <div class="caixa_atributo_valor">
+                    <div class="atributo">
+                        Saldo
+                    </div>
+                    <div class="valor">
+                        <%=" R$#{@cliente.saldo}"%>
+                    </div>
+                </div>
+
+                <div class="caixa_atributo_valor">
+                    <div class="atributo">
+                        Compras
+                    </div>
+                    <div class="valor">
+                        <%=" #{@cliente.compras} compras feitas"%>
+                    </div>
+                </div>
+
+                <div class="caixa_atributo_valor">
+                    <%= link_to "Editar perfil", edit_cliente_path(@cliente)%>
+                </div>
+            </div>
+        </div>
+
+        Historico
+        <div class="historico_content">
+            <% historico = Pedido.where(cliente_id: @cliente.id, foiPago: true) %>
+            <table class="tabela_registros">
+                <tr>
+                    <th style="width: 22.5%; padding: 0 0 0 5px;">Produto</th>
+                    <th style="width: 22.5%; padding: 0 0 0 5px;">Quantidade</th>
+                    <th style="width: 22.5%; padding: 0 0 0 5px;">Vendedor</th>
+                    <th style="width: 22.5%; padding: 0 0 0 5px;">Data</th>
+                </tr>
+        
+                <% historico.each do |registro| %>
+                    <tr>
+                        <td><%= registro.produto.nome %></td>
+                        <td><%= registro.quantidade %></td>
+                        <td><%= registro.produto.vendedor.user.nome %></td>
+                        <td><%= registro.dataCompra %></td>
+                    </tr>
+                <% end %>
+            </table>    
+        </div>
+    </div>
+
+    <div class="janela_reviews">
+        Reviews
+        <%= render partial: 'reviews/index', locals: { cliente: @cliente} %>
+    </div>
+</div>
+
+<div class="footer">
+    <div>
+        <img src="<%= asset_path('windows-logo.png') %>" alt="logo windows">
+    </div>
+</div>

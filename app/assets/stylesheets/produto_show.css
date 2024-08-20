@@ -1,0 +1,59 @@
+.produto_show{
+    display: flex;
+    margin: 10px 0 0 180px;
+}
+.produto_show .janela_reviews{
+    margin: 20px 0 0 0;
+    overflow-y: auto;
+    height: 600px;
+    width: 478px;
+}
+.janela_produto{
+    padding: 12px;
+    width: 500px;
+    height: 400px;
+    margin: 20px;
+
+    background-color: #bdbdbd;
+    box-shadow: inset 2px 2px #fff, 2px 2px #000;
+}
+
+.janela_criar_produto{
+    padding: 12px;
+    width: 500px;
+    height: 400px;
+    margin: 20px;
+
+    background-color: #bdbdbd;
+    box-shadow: inset 2px 2px #fff, 2px 2px #000;
+}
+.janela_produto .janela_produto_data{
+    position: relative;
+    display: flex;
+}
+.janela_produto .janela_produto_data img{
+    height: 180px;
+    width: 200px;
+    box-shadow: inset 2px 2px #000, 2px 2px #fff;
+}
+.janela_produto .janela_produto_data .data{
+    margin: 0 0 0 10px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+.janela_produto .janela_produto_data .caixa_atributo_valor{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.janela_produto .janela_produto_data .valor{
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    margin: 5px;
+    width: 100%;
+
+    background-color: #fff;
+    box-shadow: inset 2px 2px #000, 2px 2px #fff;
+}

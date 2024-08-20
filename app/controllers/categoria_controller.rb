@@ -6,4 +6,9 @@ class CategoriaController < ApplicationController
       format.js   # Para requests via Ajax
     end
   end
+
+  def show
+    @categoria = Categorium.find(params[:id])
+    @produtos = @categoria.produtos
+  end
 end

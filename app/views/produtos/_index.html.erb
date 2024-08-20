@@ -1,18 +1,39 @@
-<div class="search_bar">
-  <%= form_with url: search_pages_path, method: :get, remote: true do |form| %>
-    <%= form.text_field :q, placeholder: "Pesquisar produtos..." %>
-    <%= form.submit "Buscar" %>
-  <% end %>
-</div>
 <div class="lista-produtos">
+  <div class="search_bar">
+    <%= form_with url: search_pages_path, method: :get, remote: true do |form| %>
+      <%= form.text_field :q, placeholder: "Pesquisar produtos..." %>
+      <%= submit_tag "&#128269;".html_safe, class: "search-icon" %>
+    <% end %>
+  </div >
+
   <ul>
+    <% if current_user.present? %>
+      <% if current_user.Vendedor? %>
+        <li>
+          <div class="item-lista">
+            <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
+            <%= link_to "Criar Produto", new_produto_path %>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+
     <% produtos.each do |produto| %>
-      <li>
-        <div class="item-lista">
-          <img src="<%= asset_path('folder_icon.png') %>" alt="iconezinho windows">
-          <%= link_to "#{produto.nome}", produto_path(produto) %>
-        </div>
-      </li>
+      <% if produto.emPromocao%>      
+        <li>
+          <div class="item-lista">
+            <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
+            <%= link_to "#{produto.nome}", produto_path(produto) %>
+          </div>
+        </li>
+      <% else %>
+        <li>
+          <div class="item-lista">
+            <img src="<%= asset_path('folder_icon.png') %>" alt="iconezinho windows">
+            <%= link_to "#{produto.nome}", produto_path(produto) %>
+          </div>
+        </li>
+      <% end %>
     <% end %>
   </ul>
 </div>

@@ -1,0 +1,81 @@
+.vendedor_show{
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.janela_reviews{
+    margin: 20px 0 0 0;
+    overflow-y: auto;
+    height: 600px;
+    width: 478px;
+}
+
+.janela_vendedor{
+    padding: 12px;
+    width: 560px;
+    height: 450;
+    margin: 0 20px;
+
+    background-color: #bdbdbd;
+    box-shadow: inset 2px 2px #fff, 2px 2px #000;
+}
+
+.janela_vendedor .janela_vendedor_data{
+    position: relative;
+    display: flex;
+    margin: 0 0 15px 0;
+}
+
+.janela_vendedor .janela_vendedor_data .data{
+    margin: 0 0 0 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.caixa_atributo_valor{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.caixa_atributo_valor .valor{
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    margin: 5px;
+    width: 100%;
+
+    background-color: #fff;
+    box-shadow: inset 2px 2px #000, 2px 2px #fff;
+}
+
+.janela_vendedor .janela_vendedor_data img{
+    height: 180px;
+    width: 200px;
+    box-shadow: inset 2px 2px #000, 2px 2px #fff;
+}
+.janela_vendedor .produtos_content{
+    margin: 12px 0 0 0;
+    overflow-y: auto;
+    height: 280px;
+}
+
+.janela_vendedor .produtos_content .lista-produtos{
+    padding: 12px;
+    background-color: #fff;
+    box-shadow: inset 2px 2px #000, 2px 2px #fff;
+}
+.janela_vendedor .produtos_content .lista-produtos .search_bar{
+    padding: 15px;
+    height: 7px;
+    width: 500px;
+}
+
+.historico_content{
+    padding: 12px;
+    background-color: #fff;
+    box-shadow: inset 2px 2px #000, 2px 2px #fff;
+    overflow-y: auto;
+    height: 280px;
+}

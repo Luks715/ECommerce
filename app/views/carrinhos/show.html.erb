@@ -1,0 +1,119 @@
+<div class="carrinho_show">
+    <% if current_user.Cliente?%>
+        <div class="janela_carrinho">
+            <div class="barra_azul">
+                <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
+                                
+                <%= ". Seu carrinho"%>
+                <div class="botao-exit">
+                    <%= form_with url: home_user_path, method: :get, local: true do %>
+                        <button type="submit">
+                            <span>X</span>
+                        </button>
+                    <% end %>
+                </div>
+            </div>
+            
+            <%= form_with url: carrinho_path(@carrinho), method: :patch, local: true do |form| %>
+                <div class="tabela_pedidos">
+                    <table class="tabela">
+                        <tr>
+                            <th style="width: 10%;">Remover</th>
+                            <th style="width: 22.5%; padding: 0 0 0 5px;">Produto</th>
+                            <th style="width: 22.5%; padding: 0 0 0 5px;">Quantidade</th>
+                            <th style="width: 22.5%; padding: 0 0 0 5px;">Preço</th>
+                            <th style="width: 22.5%; padding: 0 0 0 5px;">Subtotal</th>
+                        </tr>
+
+                        <% pedidosNaoPagos = @pedidos.where(foiPago: false)%>
+                        <% pedidosNaoPagos.each do |pedido| %>
+                            <% produto = pedido.produto %>
+                            <tr>
+                                <td><%= check_box_tag "carrinho[pedidos_ids][]", pedido.id %></td>
+                                <td><%= produto.nome %></td>
+
+                                <% if pedido.quantidade > produto.emEstoque%>
+                                    <% pedido.update(quantidade: produto.emEstoque)%>
+                                    <% flash.now[:notice] = 'A quantidade em alguns de seus pedidos excede o estoque atual do produto' %>
+                                <% end %>
+                                <td><%= pedido.quantidade %></td>
+
+                                <% if produto.emPromocao %>
+                                    <td><%= " R$#{produto.preco_promocional}"%></td>
+                                <% else %>
+                                    <td><%= "R$#{produto.preco}" %></td>
+                                <% end %>
+
+                                <td><%= pedido.subTotal %></td>
+                            </tr>
+                        <% end %>
+                    </table>
+                </div>
+
+                <div class="form-actions">
+                    <%= form.submit "Remover Selecionados", name: "remove_selected", class: "btn-remove" %>
+                    <%= form.submit "Finalizar Compra", name: "finalize_purchase", class: "btn-purchase" %>
+
+                    <div class="caixa_atributo_valor">
+                        <div class="atributo">
+                        Total
+                        </div>
+
+                        <div class="valor">
+                            <%= " #{@carrinho.calcular_total}"%>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    <% elsif current_user.Vendedor? %>
+        <div class="janela_carrinho">
+            <div class="barra_azul">
+                <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
+                                
+                <%= ". Seu carrinho"%>
+                <div class="botao-exit">
+                    <%= form_with url: home_user_path, method: :get, local: true do %>
+                        <button type="submit">
+                            <span>X</span>
+                        </button>
+                    <% end %>
+                </div>
+            </div>
+
+            <%= form_with url: carrinho_path(@carrinho), method: :patch, local: true do |form| %>
+                <div class="tabela_pedidos">
+                    <table class="tabela">
+                        <tr>
+                            <th style="width: 10%;">Enviar</th>
+                            <th style="width: 22.5%; padding: 0 0 0 5px;">Produto</th>
+                            <th style="width: 22.5%; padding: 0 0 0 5px;">Quantidade</th>
+                            <th style="width: 22.5%; padding: 0 0 0 5px;">Endereço</th>
+                        </tr>
+
+                        <% pedidosNaoEnviados = @pedidos.where(foiEnviado: false)%>
+                        <% pedidosNaoEnviados.each do |pedido| %>
+                            <% produto = pedido.produto %>
+                            <tr>
+                                <td><%= check_box_tag "carrinho[pedidos_ids][]", pedido.id %></td>
+                                <td><%= produto.nome %></td>
+                                <td><%= pedido.quantidade %></td>
+                                <td><%= pedido.cliente.user.endereco %></td>
+                            </tr>
+                        <% end %>
+                    </table>
+                </div>
+
+                <div class="form-actions">
+                    <%= form.submit "Enviar produtos", name: "send_purchases", class: "btn-remove" %>
+                </div>
+            <% end %>
+        </div>
+    <% end %>
+</div>
+
+<div class="footer">
+    <div>
+        <img src="<%= asset_path('windows-logo.png') %>" alt="logo windows">
+    </div>
+</div>
