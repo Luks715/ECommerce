@@ -11,6 +11,7 @@ cliente_user = User.create!(
 cliente1 = Cliente.create!(
   user: cliente_user,
   cpf: "123.456.789-00",
+  saldo: 1000,
 )
 
 # Criando vendedor

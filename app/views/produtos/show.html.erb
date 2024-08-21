@@ -23,8 +23,8 @@
                             <%= link_to "Escreva uma review", new_review_path(produto_id: @produto.id, vendedor_id: nil) %>
                         <% end %>
                     <% elsif user_signed_in? && current_user.Vendedor? %>
-                        <% if current_user != @produto.vendedor.user %>
-                            <% link_to "Editar produto", edit_produto_path(@produto)%>
+                        <% if current_user == @produto.vendedor.user %>
+                            <%= link_to "Editar produto", edit_produto_path(@produto)%>
                         <% end %>
                     <% end %>
                 </div>
