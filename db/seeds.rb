@@ -2,7 +2,6 @@
 cliente_user = User.create!(
   nome: "João Silva",
   email: "joao.silva@example.com",
-  cpf: "123.456.789-00",
   telefone: "11987654321",
   endereco: "Rua das Flores, 123, São Paulo - SP",
   password: "senha123",
@@ -11,14 +10,13 @@ cliente_user = User.create!(
 
 cliente1 = Cliente.create!(
   user: cliente_user,
-  saldo: 1000.00
+  cpf: "123.456.789-00",
 )
 
 # Criando vendedor
 user_vendedor = User.create!(
   email: 'vendedor@example.com',
   password: 'password123',
-  cpf: "123.456.489-10",
   telefone: "1198234",
   endereco: "Rua das Flores, 123, Xique-Xique - RJ",
   role: 'Vendedor',
@@ -27,6 +25,7 @@ user_vendedor = User.create!(
 
 vendedor = Vendedor.create!(
   emailParaContato: 'vendedor@example.com',
+  cnpj: "123.456.489-10",
   user: user_vendedor
 )
 

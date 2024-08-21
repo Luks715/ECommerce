@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
 
   create_table "clientes", force: :cascade do |t|
     t.bigint "user_id", null: false
+    t.string "cpf", null: false
     t.decimal "saldo", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -55,14 +56,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
   end
 
   create_table "historicos", force: :cascade do |t|
-    t.bigint "cliente_id", null: false
-    t.bigint "produto_id", null: false
+    t.string "clienteNome", null: false
+    t.string "vendedorNome", null: false
+    t.string "produtoNome", null: false
     t.integer "quantidade", null: false
     t.date "dataCompra", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cliente_id"], name: "index_historicos_on_cliente_id"
-    t.index ["produto_id"], name: "index_historicos_on_produto_id"
   end
 
   create_table "pedidos", force: :cascade do |t|
@@ -72,7 +72,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
     t.integer "quantidade", null: false
     t.boolean "foiPago", null: false
     t.boolean "foiEnviado", null: false
-    t.date "dataCompra", null: false
+    t.date "dataChegada", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["carrinho_id"], name: "index_pedidos_on_carrinho_id"
@@ -111,7 +111,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
 
   create_table "users", force: :cascade do |t|
     t.string "nome", null: false
-    t.string "cpf", null: false
     t.string "telefone", null: false
     t.string "endereco", null: false
     t.integer "role", default: 0, null: false
@@ -134,6 +133,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
   create_table "vendedors", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "emailParaContato", null: false
+    t.string "cnpj", null: false
     t.decimal "carteira", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -146,8 +146,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
   add_foreign_key "cliente_vendedors", "clientes"
   add_foreign_key "cliente_vendedors", "vendedors"
   add_foreign_key "clientes", "users"
-  add_foreign_key "historicos", "clientes"
-  add_foreign_key "historicos", "produtos"
   add_foreign_key "pedidos", "carrinhos"
   add_foreign_key "pedidos", "clientes"
   add_foreign_key "pedidos", "produtos"

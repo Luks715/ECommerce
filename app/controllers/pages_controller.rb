@@ -30,6 +30,10 @@ class PagesController < ApplicationController
     end
   end
 
+  def acompanhar_entrega
+
+  end
+
   def search
     query = params[:q]
     @produtos = Produto.where("nome LIKE ?", "%#{query}%")

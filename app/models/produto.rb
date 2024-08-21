@@ -1,7 +1,11 @@
 class Produto < ApplicationRecord
   belongs_to :vendedor, class_name: "Vendedor", foreign_key: "vendedor_id"
   belongs_to :categorium, class_name: "Categorium", foreign_key: "categorium_id"
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
+
+  #Associação para o cliente fazer uma review do produto
+  has_many :cliente_produtos, dependent: :destroy
+  has_many :clientes, through: :cliente_produtos
 
   validates :nome, presence: true
   validates :descricao, presence: true

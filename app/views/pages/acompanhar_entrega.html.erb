@@ -1,7 +1,6 @@
 <div class="janela_carrinho">
     <div class="barra_azul">
         <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
-                            
         <%=". Pedidos enviados"%>
         <div class="botao-exit">
             <%= form_with url: home_user_path, method: :get, local: true do %>
@@ -14,23 +13,32 @@
 
     <div class="historico_content">
         <% historico = Pedido.where(cliente: current_user.cliente, foiPago: true, foiEnviado: true) %>
-        <table class="tabela_registros">
-            <tr>
-                <th style="width: 22.5%; padding: 0 0 0 5px;">Produto</th>
-                <th style="width: 22.5%; padding: 0 0 0 5px;">Quantidade</th>
-                <th style="width: 22.5%; padding: 0 0 0 5px;">Vendedor</th>
-                <th style="width: 22.5%; padding: 0 0 0 5px;">Data</th>
-            </tr>
-    
-            <% historico.each do |registro| %>
+        
+        <%= form_with url: pedidos_destroy_path, method: :delete, local: true do %>
+            <table class="tabela_registros">
                 <tr>
-                    <td><%= registro.produto.nome %></td>
-                    <td><%= registro.quantidade %></td>
-                    <td><%= registro.produto.vendedor.user.nome %></td>
-                    <td><%= registro.dataCompra %></td>
+                    <th style="width: 10%; padding: 0 0 0 5px;">Recebidos</th>
+                    <th style="width: 22.5%; padding: 0 0 0 5px;">Produto</th>
+                    <th style="width: 22.5%; padding: 0 0 0 5px;">Quantidade</th>
+                    <th style="width: 22.5%; padding: 0 0 0 5px;">Vendedor</th>
+                    <th style="width: 22.5%; padding: 0 0 0 5px;">Data de chegada</th>
                 </tr>
-            <% end %>
-        </table>    
+
+                <% historico.each do |registro| %>
+                    <tr>
+                        <td><%= check_box_tag "pedidos_ids[]", registro.id %></td>
+                        <td><%= registro.produto.nome %></td>
+                        <td><%= registro.quantidade %></td>
+                        <td><%= registro.produto.vendedor.user.nome %></td>
+                        <td><%= registro.dataChegada %></td>
+                    </tr>
+                <% end %>
+            </table>
+
+            <div class="actions">
+                <%= submit_tag "Recebidos" %>
+            </div>
+        <% end %>
     </div>
 </div>
 

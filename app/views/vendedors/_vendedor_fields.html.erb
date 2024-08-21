@@ -1,1 +1,18 @@
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+<%= f.hidden_field :_destroy %>
+<div class="vendedor_fields">
+    <div class="caixa_atributo_valor">
+      <div class="atributo">
+        CNPJ
+      </div>
+      <%= f.text_field :cnpj, class: 'text-field' %>
+    </div>
+</div>
+
+<div class="vendedor_fields">
+    <div class="caixa_atributo_valor">
+        <div class="atributo">
+            Email para contato
+        </div>
+        <%= f.text_field :emailParaContato, class: 'text-field' %>
+    </div>
+</div>

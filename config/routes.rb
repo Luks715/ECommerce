@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
   post 'criar_pedido', to: 'pedidos#create'
 
+  delete 'pedidos/destroy', to: 'pedidos#destroy', as: 'pedidos_destroy'
+
   get 'acompanhar_entrega', to: 'pages#acompanhar_entrega', as: 'acompanhar_entrega'
   get 'home_user', to: 'pages#home_user', as: 'home_user'
   get 'search', to: 'pages#search', as: 'search_pages'

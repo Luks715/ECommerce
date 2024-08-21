@@ -6,9 +6,13 @@ class CarrinhosController < ApplicationController
 
   def update
     if params[:remove_selected]
-      pedidos_ids = params[:carrinho][:pedidos_ids]
-      Pedido.where(id: pedidos_ids).destroy_all
-      redirect_to carrinho_path(@carrinho), notice: 'Pedidos removidos com sucesso.'
+      if params[:carrinho].present? && params[:carrinho][:pedidos_ids].present?
+        pedidos_ids = params[:carrinho][:pedidos_ids]
+        Pedido.where(id: pedidos_ids).destroy_all
+        redirect_to carrinho_path(@carrinho), notice: 'Pedidos removidos com sucesso.'
+      else
+        flash[:alert] = "Nenhum pedido foi selecionado."
+      end
     elsif params[:finalize_purchase]
       # Lógica para finalizar a compra do carrinho
       if @carrinho.efetuar_pagamento
@@ -17,9 +21,13 @@ class CarrinhosController < ApplicationController
         redirect_to carrinho_path(@carrinho), notice: 'Saldo insuficiente'
       end
     elsif params[:send_purchases]
-      pedidos_ids = params[:carrinho][:pedidos_ids]
-      Pedido.where(id: pedidos_ids).each do |pedido|
-        pedido.update(foiEnviado: true)
+      if params[:carrinho].present? && params[:carrinho][:pedidos_ids].present?
+        pedidos_ids = params[:carrinho][:pedidos_ids]
+        Pedido.where(id: pedidos_ids).each do |pedido|
+          pedido.update(foiEnviado: true)
+        end
+      else
+        flash[:alert] = "Nenhum pedido foi selecionado."
       end
       redirect_to root_path, notice: 'Compras enviadas para o cliente'
     end

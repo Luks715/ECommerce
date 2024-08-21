@@ -1,6 +1,6 @@
 class Carrinho < ApplicationRecord
   belongs_to :user
-  has_many :pedidos
+  has_many :pedidos, dependent: :destroy
 
   def calcular_total
     total = 0.0
@@ -21,7 +21,7 @@ class Carrinho < ApplicationRecord
         vendedor = pedido.produto.vendedor
         cliente = self.user.cliente
 
-        pedido.update(foiPago: true, dataCompra: Date.today)
+        pedido.update(foiPago: true, dataChegada: Date.today + 14)
         vendedor.update(carteira: (vendedor.carteira + pedido.subTotal))
 
         # Após a compra ser feita, o pedido do cliente passa para o carrinho do vendedor
@@ -31,10 +31,16 @@ class Carrinho < ApplicationRecord
         # após o cliente fazer a avaliação, a instância é destruída.
         ClienteVendedor.find_or_create_by(cliente: cliente, vendedor: vendedor)
         ClienteProduto.find_or_create_by(cliente: cliente, produto: produto)
+
+        #Cria o Historico da compra
+        Historico.create(clienteNome: self.user.nome,
+                         vendedorNome: vendedor.user.nome,
+                         produtoNome: produto.nome,
+                         quantidade: pedido.quantidade,
+                         dataCompra: Date.today)
       end
 
       self.user.cliente.update(saldo: novo_saldo)
-
       true
     end
   end

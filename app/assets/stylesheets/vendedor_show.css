@@ -56,20 +56,15 @@
     box-shadow: inset 2px 2px #000, 2px 2px #fff;
 }
 .janela_vendedor .produtos_content{
-    margin: 12px 0 0 0;
     overflow-y: auto;
     height: 280px;
-}
-
-.janela_vendedor .produtos_content .lista-produtos{
-    padding: 12px;
     background-color: #fff;
     box-shadow: inset 2px 2px #000, 2px 2px #fff;
+    padding: 2px 0 0 2px;
 }
-.janela_vendedor .produtos_content .lista-produtos .search_bar{
-    padding: 15px;
-    height: 7px;
-    width: 500px;
+.janela_vendedor .produtos_content .search_bar{
+    padding: 0 0 0 15px;
+    width: 533px;
 }
 
 .historico_content{

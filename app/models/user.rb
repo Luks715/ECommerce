@@ -1,22 +1,24 @@
 class User < ApplicationRecord
   after_initialize :create_default_carrinho, if: :new_record?
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable
 
   enum role: {Cliente: 0, Vendedor: 1}
 
-  validates :nome, presence: true, uniqueness: true
+  validates :nome, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :cpf, presence: true, uniqueness: true
   validates :telefone, presence: true, uniqueness: true
   validates :endereco, presence: true
   validates :role, presence: true
 
-  has_one :carrinho
-  has_one :cliente
-  has_one :vendedor
+  has_one :carrinho, dependent: :destroy
+
+  has_one :cliente, dependent: :destroy, inverse_of: :user
+  accepts_nested_attributes_for :cliente, reject_if: :all_blank, allow_destroy: true
+
+  has_one :vendedor, dependent: :destroy, inverse_of: :user
+  accepts_nested_attributes_for :vendedor, reject_if: :all_blank, allow_destroy: true
+
 
   private
   def create_default_carrinho

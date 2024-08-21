@@ -26,7 +26,7 @@ class PedidosController < ApplicationController
         quantidade: quantidade,
         foiPago: false,
         foiEnviado: false,
-        dataCompra: Date.today)
+        dataChegada: Date.today + 14)
 
       if @pedido.save
         redirect_to root_path, notice: 'Pedido criado com sucesso.'
@@ -34,6 +34,17 @@ class PedidosController < ApplicationController
         redirect_to produto_path(produto), alert: 'Erro ao criar pedido.'
       end
     end
+  end
+
+  def destroy
+    if params[:pedidos_ids].present?
+      Pedido.where(id: params[:pedidos_ids], cliente: current_user.cliente).destroy_all
+      flash[:notice] = "Pedidos marcados como recebidos e removidos com sucesso."
+    else
+      flash[:alert] = "Nenhum pedido foi selecionado."
+    end
+
+    redirect_to home_user_path
   end
 
   private

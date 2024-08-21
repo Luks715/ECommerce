@@ -8,9 +8,7 @@ class CreatePedidos < ActiveRecord::Migration[7.1]
 
       t.boolean :foiPago, null: false
       t.boolean :foiEnviado, null: false
-
-      t.date :dataCompra, null: false
-
+      t.date :dataChegada, null: false
       t.timestamps
     end
   end

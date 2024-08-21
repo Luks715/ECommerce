@@ -2,14 +2,16 @@ class Vendedor < ApplicationRecord
   after_initialize :set_default_values, if: :new_record?
 
   belongs_to :user, class_name: "User", foreign_key: "user_id"
+  has_many :reviews, dependent: :destroy
+
   has_many :produtos, dependent: :destroy
-  accepts_nested_attributes_for :produtos, reject_if: ->(attributes){ attributes['name'].blank? }, allow_destroy: true
-  has_many :reviews
+  accepts_nested_attributes_for :produtos, reject_if: :all_blank, allow_destroy: true
 
   validates :emailParaContato, presence: true
+  validates :cnpj, uniqueness: true
 
   def totalVendas
-    Pedido.where(carrinho: self.user.carrinho).count
+    Historico.where(vendedorNome: self.user.nome).count
   end
 
   def calcular_nota

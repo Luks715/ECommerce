@@ -19,15 +19,6 @@
     box-shadow: inset 2px 2px #fff, 2px 2px #000;
 }
 
-.janela_criar_produto{
-    padding: 12px;
-    width: 500px;
-    height: 400px;
-    margin: 20px;
-
-    background-color: #bdbdbd;
-    box-shadow: inset 2px 2px #fff, 2px 2px #000;
-}
 .janela_produto .janela_produto_data{
     position: relative;
     display: flex;
@@ -61,4 +52,21 @@
 
     background-color: #fff;
     box-shadow: inset 2px 2px #000, 2px 2px #fff;
+}
+
+.janela_produto_data .criar_data .caixa_atributo_valor{
+    margin: 5px;
+    padding: 5px;
+}
+.vendedor_show .coluna{
+    display: flex;
+    flex-direction: column;
+}
+.coluna .actions{
+    margin: 0 0 0 20px;
+    box-shadow: inset 2px 2px #fff, 2px 2px #000;
+    padding: 1px 0 0 1px;
+
+    width: 95px;
+    height: 22px;
 }

@@ -1,55 +1,66 @@
-<%= form_with model: @produto, method: :post, local: true do |form| %>
-    Caso não queira deixar seu produto em promoção, coloque um zero no campo Desconto e deixe o campo Data vazio
-    <div class="vendedor_show">
-        <div class="janela_produto">
-            <div class="barra_azul">
-                <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
+Caso não queira deixar seu produto em promoção, coloque um zero no campo Desconto e deixe o campo Data vazio
+<div class="vendedor_show">
+    <div class="janela_produto">
+        <div class="barra_azul">
+            <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
                             
-                <%=". Novo produto"%>
-                <div class="botao-exit">
-                    <%= form_with url: vendedor_path(@vendedor), method: :get, local: true do %>
-                        <button type="submit">
-                            <span>X</span>
-                        </button>
-                    <% end %>
-                </div>
+            <%=". Novo produto"%>
+            <div class="botao-exit">
+                <%= form_with url: vendedor_path(@vendedor), method: :get, local: true do %>
+                    <button type="submit">
+                        <span>X</span>
+                    </button>
+                <% end %>
             </div>
-
-            <div class="janela_produto_data">
-                <div class="imagem">
-                    <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
-                </div>
-
-                <div class="data">
-                    <div class="field">
-                        <%= form.label :nome, "Nome do Produto" %>
-                        <%= form.text_field :nome, required: true%>
-                    </div>
-
-                    <div class="field">
-                        <%= form.label :descricao, "Descrição do Produto" %>
-                        <%= form.text_area :descricao, required: true %>
-                    </div>
-
-                    <div class="field">
-                        <%= form.label :preco, "Preço (R$)" %>
-                        <%= form.number_field :preco, step: 0.01, required: true %>
-                    </div>
-
-                    <div class="field">
-                        <%= form.label :emEstoque, "Quantidade em Estoque" %>
-                        <%= form.number_field :emEstoque, required: true %>
-                    </div>
-
-                    <div class="field">
-                        <%= form.label :categorium_id, "Categoria" %>
-                        <%= form.collection_select :categorium_id, @categoria, :id, :nome, prompt: "Selecione uma categoria", required: true %>
-                    </div>
-                </div>
-            </div>
-            
         </div>
 
+        <%= form_with model: @produto, method: :post, local: true do |form| %>
+        <div class="janela_produto_data">
+            <div class="imagem">
+                <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
+            </div>
+
+            <div class="criar_data">
+                <div class="caixa_atributo_valor">
+                    <div class="atributo">
+                        Nome
+                    </div>
+                    <%= form.text_field :nome%>
+                </div>
+
+                <div class="caixa_atributo_valor">
+                    <div class="atributo">
+                        Descrição
+                    </div>
+                    <%= form.text_area :descricao %>
+                </div>
+
+                <div class="caixa_atributo_valor">
+                    <div class="atributo">
+                        Categoria
+                    </div>
+                    <%= form.collection_select :categorium_id, @categoria, :id, :nome, prompt: "Selecione uma categoria" %>
+                </div>
+
+
+                <div class="caixa_atributo_valor">
+                    <div class="atributo">
+                        Preço (R$)
+                    </div>
+                    <%= form.number_field :preco, step: 0.01 %>
+                </div>
+
+                <div class="caixa_atributo_valor">
+                    <div class="atributo">
+                        Em estoque
+                    </div>
+                    <%= form.number_field :emEstoque %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="coluna">
         <div class="janela_review">
             <div class="barra_azul">
                 <%=". Promoção?"%>
@@ -81,7 +92,8 @@
             <%= form.submit "Criar Produto" %>
         </div>
     </div>
-<% end %>
+    <% end %>
+</div>
 
 <div class="footer">
     <div>

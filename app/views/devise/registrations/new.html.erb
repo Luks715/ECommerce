@@ -13,68 +13,81 @@
     </div>
 
     <div class="nova_conta_data">
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |user_form| %>
         <%= render "devise/shared/error_messages", resource: resource %>
 
-        <!-- Campos comuns para todos os tipos de usuário -->
-        <div class="field">
-          <%= f.label :nome %><br />
-          <%= f.text_field :nome, autofocus: true %>
+        <div class="caixa_atributo_valor">
+          <div class="atributo">
+            Nome
+          </div>
+          <%= user_form.text_field :nome %>
+        </div>
+
+        <div class="caixa_atributo_valor">
+          <div class="atributo">
+            Email
+          </div>
+           <%= user_form.email_field :email %>
+        </div>
+
+        <div class="caixa_atributo_valor">
+          <div class="atributo">
+            Telefone
+          </div>
+            <%= user_form.text_field :telefone %>
+        </div>
+
+        <div class="caixa_atributo_valor">
+          <div class="atributo">
+            Endereço
+          </div>
+            <%= user_form.text_field :endereco %>
         </div>
 
         <div class="field">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autocomplete: "email" %>
-        </div>
-
-        <div class="field">
-          <%= f.label :cpf %><br />
-          <%= f.text_field :cpf %>
-        </div>
-
-        <div class="field">
-          <%= f.label :telefone %><br />
-          <%= f.text_field :telefone %>
-        </div>
-
-        <div class="field">
-          <%= f.label :endereco %><br />
-          <%= f.text_field :endereco %>
-        </div>
-
-        <div class="field">
-          <%= f.label :password %>
+          <%= user_form.label :password %>
           <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> caracteres no mínimo)</em>
           <% end %><br />
-          <%= f.password_field :password, autocomplete: "new-password" %>
+          <%= user_form.password_field :password, autocomplete: "new-password" %>
         </div>
 
         <div class="field">
-          <%= f.label :password_confirmation %><br />
-          <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+          <%= user_form.label :password_confirmation %><br />
+          <%= user_form.password_field :password_confirmation, autocomplete: "new-password" %>
         </div>
 
-       <!-- Radio buttons para selecionar Cliente ou Vendedor -->
-        <div class="field">
-          <%= f.label :role, "Tipo de Usuário" %><br />
-          <%= f.radio_button :role, 'Cliente', id: 'role_cliente' %>
-          <%= f.label :role, 'Cliente', for: 'role_cliente' %>
-          <%= f.radio_button :role, 'Vendedor', id: 'role_vendedor' %>
-          <%= f.label :role, 'Vendedor', for: 'role_vendedor' %>
+        <div class="caixa_atributo_valor">
+          <div class="atributo">
+            Tipo de Usuário
+          </div>
+          <div class="valor_user">
+            <div class="radio_cliente">
+              <%= user_form.radio_button :role, 'Cliente', id: 'role_cliente' %>
+              <%= user_form.label :role, 'Cliente', for: 'role_cliente' %>
+            </div>
+
+            <div class="radio_vendedor">
+              <%= user_form.radio_button :role, 'Vendedor', id: 'role_vendedor' %>
+              <%= user_form.label :role, 'Vendedor', for: 'role_vendedor' %>
+            </div>                   
+          </div>
         </div>
 
-        <!-- Campos adicionais para Cliente e Vendedor -->
         <div id="cliente_fields" style="display: none;">
-          <%= render partial: 'clientes/cliente_fields', locals: { f: f } %>
+          <%= user_form.fields_for :cliente do |cliente_form| %>
+            <%= render 'clientes/cliente_fields', f: cliente_form %>
+          <% end %>
         </div>
 
        <div id="vendedor_fields" style="display: none;">
-          <%= render partial: 'vendedors/vendedor_fields', locals: { f: f } %>
+          <%= user_form.fields_for :vendedor do |vendedor_form| %>
+            <%= render 'vendedors/vendedor_fields', f: vendedor_form %>
+          <% end %>
         </div>
 
         <div class="actions">
-          <%= f.submit "Sign up" %>
+          <%= user_form.submit "Sign up" %>
         </div>
       <% end %>
 
