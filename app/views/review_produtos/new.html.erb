@@ -5,26 +5,17 @@
     <%=". Produto"%>
 
     <div class="botao-exit">
-      <% if @vendedor.present? %>
-        <%= form_with url: vendedor_path(@vendedor), method: :get, local: true do %>
-          <button type="submit">
-            <span>X</span>
-          </button>
-        <% end %>
-      <% elsif @produto.present? %>
-        <%= form_with url: produto_path(@produto), method: :get, local: true do %>
-          <button type="submit">
-            <span>X</span>
-          </button>
-        <% end %>
+      <%= form_with url: produto_path(@produto), method: :get, local: true do %>
+        <button type="submit">
+          <span>X</span>
+        </button>
       <% end %>
     </div>
   </div>
 
   <div class="criar_review">
-    <%= form_with(model: @review, local: true) do |form| %>
-      <%= form.hidden_field :produto_id, value: @produto&.id %>
-      <%= form.hidden_field :vendedor_id, value: @vendedor&.id %>
+    <%= form_with(model: @reviewProduto, local: true) do |form| %>
+      <%= form.hidden_field :produto_id, value: @produto.id %>
 
       <div class="caixa_atributo_valor">
         <div class="atributo">

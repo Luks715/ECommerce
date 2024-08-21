@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   resources :clientes
   resources :vendedors
   resources :user
-  resources :reviews
+  resources :review_produtos
+  resources :review_vendedors
   resources :produtos
 
   post 'criar_pedido', to: 'pedidos#create'

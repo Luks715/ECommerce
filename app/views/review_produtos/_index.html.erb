@@ -1,7 +1,7 @@
 <!-- IMPLEMENTAR DESTROY DA REVIEW CASO O CURRENT_USER SEJA O USER DA REVIEW-->
 
 <% if defined?(produto) && produto.present? %>
-    <% reviews_produto = Review.where(produto_id: produto.id) %>
+    <% reviews_produto = ReviewProduto.where(produto_id: produto.id) %>
     <% reviews_produto.each do |review| %>
         <div class="janela_review">
             <div class="barra_azul">
@@ -33,42 +33,8 @@
             </div>
         </div>
     <% end %>
-<% elsif defined?(vendedor) && vendedor.present? %>
-    <% reviews_vendedor = Review.where(vendedor_id: vendedor.id, produto_id: nil) %>
-    <% reviews_vendedor.each do |review| %>
-        <div class="janela_review">
-            <div class="barra_azul">
-                <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
-                        
-                <%=". Review de #{review.cliente.user.nome}"%>
-                <div class="botao-exit">
-                    <button type="submit">
-                        <span>X</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="review_data">
-                <div class="caixa_atributo_valor">
-                    <div class="atributo">
-                        Nota
-                    </div>
-                    <div class="valor_nota">
-                        <%=" #{review.nota}/5"%>
-                    </div>
-                </div>
-
-                Comentario
-                <div class="caixa_atributo_valor">
-                    <div class="valor">
-                        <%=" #{review.comentario}"%>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <% end %>
 <% elsif defined?(cliente) && cliente.present? %>
-    <% reviews_cliente = Review.where(cliente_id: cliente.id) %>
+    <% reviews_cliente = ReviewProduto.where(cliente_id: cliente.id) %>
     <% reviews_cliente.each do |review| %>
         <div class="janela_review">
             <div class="barra_azul">

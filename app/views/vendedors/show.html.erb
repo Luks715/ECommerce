@@ -19,7 +19,7 @@
 
                 <% if user_signed_in?  && current_user.Cliente? %>
                     <% if ClienteVendedor.find_by(cliente: current_user.cliente, vendedor: @vendedor).present? %>
-                        <%= link_to "Escreva uma review", new_review_path(produto_id: nil, vendedor_id: @vendedor.id) %>
+                        <%= link_to "Escreva uma review", new_review_vendedor_path(vendedor_id: @vendedor.id) %>
                     <% end %>
                 <% elsif user_signed_in?  && current_user.Vendedor? && (@vendedor = current_user.vendedor) %>
                     <%= link_to "Editar seu perfil", edit_vendedor_path(@vendedor) %>
@@ -99,7 +99,7 @@
 
     <div class="janela_reviews">
         Reviews
-        <%= render partial: 'reviews/index', locals: { vendedor: @vendedor} %>
+        <%= render partial: 'review_vendedors/index', locals: { vendedor: @vendedor} %>
     </div>
 </div>
 

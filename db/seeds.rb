@@ -59,20 +59,18 @@ produto_batman = Produto.create!(
 )
 
 # Criando reviews
-Review.create!(
+ReviewProduto.create!(
   nota: 4,
   comentario: "Ótima fantasia, meu filho adorou!",
   cliente: cliente1,
   produto: produto_superman,
-  vendedor: vendedor
 )
 
-Review.create!(
+ReviewProduto.create!(
   nota: 5,
   comentario: "Produto excelente, recomendo!",
   cliente: cliente1,
   produto: produto_batman,
-  vendedor: vendedor
 )
 
 puts "Seeds carregados com sucesso!"

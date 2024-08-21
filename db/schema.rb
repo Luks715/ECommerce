@@ -96,17 +96,26 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
     t.index ["vendedor_id"], name: "index_produtos_on_vendedor_id"
   end
 
-  create_table "reviews", force: :cascade do |t|
+  create_table "review_produtos", force: :cascade do |t|
     t.bigint "cliente_id", null: false
-    t.bigint "produto_id"
-    t.bigint "vendedor_id"
+    t.bigint "produto_id", null: false
     t.integer "nota", null: false
-    t.text "comentario"
+    t.text "comentario", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cliente_id"], name: "index_reviews_on_cliente_id"
-    t.index ["produto_id"], name: "index_reviews_on_produto_id"
-    t.index ["vendedor_id"], name: "index_reviews_on_vendedor_id"
+    t.index ["cliente_id"], name: "index_review_produtos_on_cliente_id"
+    t.index ["produto_id"], name: "index_review_produtos_on_produto_id"
+  end
+
+  create_table "review_vendedors", force: :cascade do |t|
+    t.bigint "cliente_id", null: false
+    t.bigint "vendedor_id", null: false
+    t.integer "nota", null: false
+    t.text "comentario", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_review_vendedors_on_cliente_id"
+    t.index ["vendedor_id"], name: "index_review_vendedors_on_vendedor_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -151,8 +160,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
   add_foreign_key "pedidos", "produtos"
   add_foreign_key "produtos", "categoria"
   add_foreign_key "produtos", "vendedors"
-  add_foreign_key "reviews", "clientes"
-  add_foreign_key "reviews", "produtos"
-  add_foreign_key "reviews", "vendedors"
+  add_foreign_key "review_produtos", "clientes"
+  add_foreign_key "review_produtos", "produtos"
+  add_foreign_key "review_vendedors", "clientes"
+  add_foreign_key "review_vendedors", "vendedors"
   add_foreign_key "vendedors", "users"
 end

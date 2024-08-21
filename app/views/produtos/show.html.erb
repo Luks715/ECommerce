@@ -20,7 +20,7 @@
                     <% if user_signed_in? && current_user.Cliente? %>
                         <%= link_to "Conheça o vendedor", vendedor_path(@vendedor)%>
                         <% if ClienteProduto.find_by(cliente: current_user.cliente, produto: @produto).present? %>
-                            <%= link_to "Escreva uma review", new_review_path(produto_id: @produto.id, vendedor_id: nil) %>
+                            <%= link_to "Escreva uma review", new_review_produto_path(produto_id: @produto.id) %>
                         <% end %>
                     <% elsif user_signed_in? && current_user.Vendedor? %>
                         <% if current_user == @produto.vendedor.user %>
@@ -129,7 +129,7 @@
 
     <div class="janela_reviews">
         Reviews 
-        <%= render partial: 'reviews/index', locals: { produto: @produto, vendedor: nil, cliente: nil} %>
+        <%= render partial: 'review_produtos/index', locals: { produto: @produto} %>
     </div>
 </div>
 

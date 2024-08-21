@@ -1,7 +1,7 @@
 class Produto < ApplicationRecord
   belongs_to :vendedor, class_name: "Vendedor", foreign_key: "vendedor_id"
   belongs_to :categorium, class_name: "Categorium", foreign_key: "categorium_id"
-  has_many :reviews, dependent: :destroy
+  has_many :review_produtos, dependent: :destroy
 
   #Associação para o cliente fazer uma review do produto
   has_many :cliente_produtos, dependent: :destroy
@@ -30,9 +30,9 @@ class Produto < ApplicationRecord
   end
 
   def nota
-    if reviews.any?
-      somaNotas = reviews.sum(:nota)
-      nota = somaNotas / reviews.count.to_f
+    if review_produtos.any?
+      somaNotas = review_produtos.sum(:nota)
+      nota = somaNotas / review_produtos.count.to_f
     else
       nota = 0
     end
