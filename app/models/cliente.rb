@@ -11,7 +11,7 @@ class Cliente < ApplicationRecord
   validates :cpf, uniqueness: true
 
   def compras
-    Historico.where(clienteNome: self.user.nome).count
+    Historico.where(cliente_nome: self.user.nome).count
   end
 
   private
@@ -27,16 +27,5 @@ class Cliente < ApplicationRecord
     self.saldo += valor
     save
     return true
-  end
-
-  def avaliar_vendedor(vendedor, avaliacao)
-    if()
-      vendedor.somaNotas += avaliacao
-      vendedor.avaliacoesRecebidas += 1
-      vendedor.save
-      return true
-    else
-      return false
-    end
   end
 end

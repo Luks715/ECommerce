@@ -42,7 +42,7 @@ class ProdutosController < ApplicationController
 
   def destroy
     if current_user == @produto.vendedor.user
-      pedido = Pedido.where(produto: @produto, foiPago: true)
+      pedido = Pedido.where(produto: @produto, foi_pago: true)
       if pedido.present?
         pedido.each do |pedido_extornado|
           cliente = pedido_extornado.cliente
@@ -75,7 +75,7 @@ class ProdutosController < ApplicationController
   private
 
   def produto_params
-    params.require(:produto).permit(:nome, :descricao, :preco, :categorium_id, :emEstoque, :desconto, :dataFim)
+    params.require(:produto).permit(:nome, :descricao, :preco, :imagem, :categorium_id, :em_estoque, :desconto, :data_fim)
   end
 
   def set_produto

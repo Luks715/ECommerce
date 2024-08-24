@@ -15,6 +15,10 @@ Caso não queira deixar seu produto em promoção, coloque um zero no campo Desc
             <div class="janela_produto_data">
                 <div class="imagem">
                     <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
+
+                    <div class="field" class="coluna">
+                        <%= form.file_field :imagem %>
+                    </div>
                 </div>
 
                 <div class="criar_data">
@@ -51,7 +55,7 @@ Caso não queira deixar seu produto em promoção, coloque um zero no campo Desc
                         <div class="atributo">
                             Em estoque
                         </div>
-                        <%= form.number_field :emEstoque %>
+                        <%= form.number_field :em_estoque %>
                     </div>
                 </div>
             </div>
@@ -80,7 +84,7 @@ Caso não queira deixar seu produto em promoção, coloque um zero no campo Desc
                         <div class="atributo">
                             Data de término
                         </div>
-                        <%= form.date_field :dataFim %>
+                        <%= form.date_field :data_fim %>
                     </div>
                 </div>
             </div>

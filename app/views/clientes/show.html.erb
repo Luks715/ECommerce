@@ -3,7 +3,7 @@
         <div class="barra_azul">
             <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
                             
-            <%=". Cliente"%>
+            <%=".Cliente"%>
             <div class="botao-exit">
                 <%= form_with url: home_user_path, method: :get, local: true do %>
                     <button type="submit">
@@ -54,7 +54,7 @@
 
         Historico
         <div class="historico_content">
-            <% historico = Historico.where(clienteNome: @usuario.nome) %>
+            <% historico = Historico.where(cliente_nome: @usuario.nome) %>
             <table class="tabela_registros">
                 <tr>
                     <th style="width: 22.5%; padding: 0 0 0 5px;">Produto</th>
@@ -65,10 +65,10 @@
         
                 <% historico.each do |registro| %>
                     <tr>
-                        <td><%= registro.produtoNome %></td>
+                        <td><%= registro.produto_nome %></td>
                         <td><%= registro.quantidade %></td>
-                        <td><%= registro.vendedorNome %></td>
-                        <td><%= registro.dataCompra %></td>
+                        <td><%= registro.vendedor_nome %></td>
+                        <td><%= registro.data_compra %></td>
                     </tr>
                 <% end %>
             </table>    
@@ -76,8 +76,13 @@
     </div>
 
     <div class="janela_reviews">
-        Reviews
+        . Reviews Produtos
         <%= render partial: 'review_produtos/index', locals: { cliente: @cliente} %>
+    </div>
+
+    <div class="janela_reviews">
+        . Reviews Vendedores
+        <%= render partial: 'review_vendedors/index', locals: { cliente: @cliente} %>
     </div>
 </div>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_24_191601) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,11 +56,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
   end
 
   create_table "historicos", force: :cascade do |t|
-    t.string "clienteNome", null: false
-    t.string "vendedorNome", null: false
-    t.string "produtoNome", null: false
+    t.string "cliente_nome", null: false
+    t.string "vendedor_nome", null: false
+    t.string "produto_nome", null: false
     t.integer "quantidade", null: false
-    t.date "dataCompra", null: false
+    t.date "data_compra", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -70,9 +70,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
     t.bigint "cliente_id", null: false
     t.bigint "produto_id", null: false
     t.integer "quantidade", null: false
-    t.boolean "foiPago", null: false
-    t.boolean "foiEnviado", null: false
-    t.date "dataChegada", null: false
+    t.boolean "foi_pago", null: false
+    t.boolean "foi_enviado", null: false
+    t.date "data_chegada", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["carrinho_id"], name: "index_pedidos_on_carrinho_id"
@@ -87,9 +87,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
     t.text "descricao", null: false
     t.float "nota", default: 0.0
     t.decimal "preco", precision: 10, scale: 2, null: false
-    t.integer "emEstoque", null: false
+    t.integer "em_estoque", null: false
+    t.binary "imagem"
     t.integer "desconto", null: false
-    t.date "dataFim"
+    t.date "data_fim"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["categorium_id"], name: "index_produtos_on_categorium_id"
@@ -123,6 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
     t.string "telefone", null: false
     t.string "endereco", null: false
     t.integer "role", default: 0, null: false
+    t.binary "imagem"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
@@ -141,7 +143,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_000033) do
 
   create_table "vendedors", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "emailParaContato", null: false
+    t.string "email_para_contato", null: false
     t.string "cnpj", null: false
     t.decimal "carteira", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false

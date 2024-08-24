@@ -9,7 +9,7 @@ class PedidosController < ApplicationController
     quantidade = params[:pedido][:quantidade].to_i
     cliente = Cliente.find(params[:pedido][:cliente_id])
 
-    if quantidade > produto.emEstoque
+    if quantidade > produto.em_estoque
       redirect_to produto_path(produto), alert: 'Quantidade excede o estoque'
     else
       pedidoExistente = Pedido.find_by(carrinho_id: current_user.carrinho.id, produto_id: produto.id)
@@ -24,9 +24,9 @@ class PedidosController < ApplicationController
         cliente_id: cliente.id,
 
         quantidade: quantidade,
-        foiPago: false,
-        foiEnviado: false,
-        dataChegada: Date.today + 14)
+        foi_pago: false,
+        foi_enviado: false,
+        data_chegada: Date.today + 14)
 
       if @pedido.save
         redirect_to root_path, notice: 'Pedido criado com sucesso.'

@@ -25,7 +25,7 @@ user_vendedor = User.create!(
 )
 
 vendedor = Vendedor.create!(
-  emailParaContato: 'vendedor@example.com',
+  email_para_contato: 'vendedor@example.com',
   cnpj: "123.456.489-10",
   user: user_vendedor
 )
@@ -43,7 +43,7 @@ produto_superman = Produto.create!(
   preco: 25,
   descricao: "Fantasia do Superman para crianças.",
   categorium: Categorium.find_by(nome: "Roupas"),
-  emEstoque: 5,
+  em_estoque: 5,
   desconto: 0,
   vendedor: vendedor
 )
@@ -53,7 +53,7 @@ produto_batman = Produto.create!(
   preco: 120,
   descricao: "Fantasia do Batman para crianças.",
   categorium: Categorium.find_by(nome: "Roupas"),
-  emEstoque: 3,
+  em_estoque: 3,
   desconto: 0,
   vendedor: vendedor
 )

@@ -24,7 +24,7 @@ class ReviewVendedorsController < ApplicationController
   # DELETE /reviews/:id
   def destroy
     @reviewVendedor.destroy
-    redirect_to  @reviewVendedor.vendedor, notice: 'Review de vendedor removida com sucesso.'
+    redirect_to  @reviewVendedor.cliente, notice: 'Review de vendedor removida com sucesso.'
   end
 
   private

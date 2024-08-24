@@ -13,6 +13,8 @@
   </head>
 
   <body>
+    <%= yield %>
+
     <div class="notices_alerts">
       <div class="notice">
         <p class="notice"><%= notice %></p>
@@ -22,6 +24,11 @@
         <p class="alert"><%= alert %></p>
       </div>
     </div>
-    <%= yield %>
+
+    <div class="footer">
+      <div>
+        <img src="<%= asset_path('windows-logo.png') %>" alt="logo windows">
+      </div>
+    </div>
   </body>
 </html>

@@ -10,38 +10,36 @@ class Produto < ApplicationRecord
   validates :nome, presence: true
   validates :descricao, presence: true
   validates :preco, presence: true
-  validates :emEstoque, presence: true
-
+  validates :em_estoque, presence: true
   validates :desconto, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 
-  validate :data_fim_deve_ser_futura, if: -> { dataFim.present? }
+  validate :data_fim_deve_ser_futura, if: -> { data_fim.present? }
 
   def preco_promocional
     if self.emPromocao
       preco * (1 - desconto / 100.0)
     else
-      self.update(desconto: 0, dataFim: nil)
+      self.update(desconto: 0, data_fim: nil)
       preco
     end
   end
 
   def emPromocao
-    (desconto > 0) && dataFim.present? && (Date.today <= dataFim)
+    (desconto > 0) && data_fim.present? && (Date.today <= data_fim)
   end
 
   def nota
     if review_produtos.any?
       somaNotas = review_produtos.sum(:nota)
-      nota = somaNotas / review_produtos.count.to_f
+      "#{(somaNotas / review_produtos.count.to_f).round(1)}/5.0 estrelas"
     else
-      nota = 0
+      "Sem reviews"
     end
-    nota.round(1)
   end
 
   def data_fim_deve_ser_futura
     if dataFim <= Date.today
-      errors.add(:dataFim, "deve ser uma data futura.")
+      errors.add(:data_fim, "deve ser uma data futura.")
     end
   end
 end

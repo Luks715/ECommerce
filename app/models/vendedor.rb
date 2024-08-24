@@ -7,11 +7,11 @@ class Vendedor < ApplicationRecord
   has_many :produtos, dependent: :destroy
   accepts_nested_attributes_for :produtos, reject_if: :all_blank, allow_destroy: true
 
-  validates :emailParaContato, presence: true
+  validates :email_para_contato, presence: true
   validates :cnpj, uniqueness: true
 
   def totalVendas
-    Historico.where(vendedorNome: self.user.nome).count
+    Historico.where(vendedor_nome: self.user.nome).count
   end
 
   def calcular_nota
@@ -20,7 +20,7 @@ class Vendedor < ApplicationRecord
       nota = somaNotas / review_vendedors.count.to_f
       nota.round(1)
     else
-      0.0
+      "Sem Reviews"
     end
   end
 

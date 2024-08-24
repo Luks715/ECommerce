@@ -6,9 +6,9 @@ class CreatePedidos < ActiveRecord::Migration[7.1]
       t.references :produto, null: false, foreign_key: true
       t.integer :quantidade, null: false
 
-      t.boolean :foiPago, null: false
-      t.boolean :foiEnviado, null: false
-      t.date :dataChegada, null: false
+      t.boolean :foi_pago, null: false
+      t.boolean :foi_enviado, null: false
+      t.date :data_chegada, null: false
       t.timestamps
     end
   end

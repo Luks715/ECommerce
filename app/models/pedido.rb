@@ -4,8 +4,8 @@ class Pedido < ApplicationRecord
   belongs_to :produto
 
   validates :quantidade, presence: true, numericality: { greater_than: 0 }
-  validates :foiPago, inclusion: { in: [true, false] }
-  validates :foiEnviado, inclusion: { in: [true, false] }
+  validates :foi_pago, inclusion: { in: [true, false] }
+  validates :foi_enviado, inclusion: { in: [true, false] }
 
   def subTotal
     return (self.produto.preco_promocional)*quantidade

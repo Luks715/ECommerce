@@ -25,25 +25,20 @@
                             <th style="width: 22.5%; padding: 0 0 0 5px;">Subtotal</th>
                         </tr>
 
-                        <% pedidosNaoPagos = @pedidos.where(foiPago: false)%>
+                        <% pedidosNaoPagos = @pedidos.where(foi_pago: false)%>
                         <% pedidosNaoPagos.each do |pedido| %>
                             <% produto = pedido.produto %>
                             <tr>
                                 <td><%= check_box_tag "carrinho[pedidos_ids][]", pedido.id %></td>
                                 <td><%= produto.nome %></td>
 
-                                <% if pedido.quantidade > produto.emEstoque%>
-                                    <% pedido.update(quantidade: produto.emEstoque)%>
+                                <% if pedido.quantidade > produto.em_estoque%>
+                                    <% pedido.update(quantidade: produto.em_estoque)%>
                                     <% flash.now[:notice] = 'A quantidade em alguns de seus pedidos excede o estoque atual do produto' %>
                                 <% end %>
                                 <td><%= pedido.quantidade %></td>
 
-                                <% if produto.emPromocao %>
-                                    <td><%= " R$#{produto.preco_promocional}"%></td>
-                                <% else %>
-                                    <td><%= "R$#{produto.preco}" %></td>
-                                <% end %>
-
+                                <td><%= " R$#{produto.preco_promocional}"%></td>
                                 <td><%= pedido.subTotal %></td>
                             </tr>
                         <% end %>
@@ -91,7 +86,7 @@
                             <th style="width: 22.5%; padding: 0 0 0 5px;">Endereço</th>
                         </tr>
 
-                        <% pedidosNaoEnviados = @pedidos.where(foiEnviado: false)%>
+                        <% pedidosNaoEnviados = @pedidos.where(foi_enviado: false)%>
                         <% pedidosNaoEnviados.each do |pedido| %>
                             <% produto = pedido.produto %>
                             <tr>

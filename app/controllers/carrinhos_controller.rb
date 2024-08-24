@@ -24,7 +24,7 @@ class CarrinhosController < ApplicationController
       if params[:carrinho].present? && params[:carrinho][:pedidos_ids].present?
         pedidos_ids = params[:carrinho][:pedidos_ids]
         Pedido.where(id: pedidos_ids).each do |pedido|
-          pedido.update(foiEnviado: true)
+          pedido.update(foi_enviado: true)
         end
       else
         flash[:alert] = "Nenhum pedido foi selecionado."

@@ -12,7 +12,7 @@
     </div>
 
     <div class="historico_content">
-        <% historico = Pedido.where(cliente: current_user.cliente, foiPago: true, foiEnviado: true) %>
+        <% historico = Pedido.where(cliente: current_user.cliente, foi_pago: true, foi_enviado: true) %>
         
         <%= form_with url: pedidos_destroy_path, method: :delete, local: true do %>
             <table class="tabela_registros">
@@ -30,7 +30,7 @@
                         <td><%= registro.produto.nome %></td>
                         <td><%= registro.quantidade %></td>
                         <td><%= registro.produto.vendedor.user.nome %></td>
-                        <td><%= registro.dataChegada %></td>
+                        <td><%= registro.data_chegada %></td>
                     </tr>
                 <% end %>
             </table>

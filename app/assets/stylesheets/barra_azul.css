@@ -41,3 +41,9 @@
 .janela_vendedor .barra_azul .botao-exit{
     margin: 0 0 0 405px;
 }
+.janela_review .barra_azul{
+    width: 342px;
+}
+.janela_review .barra_azul .botao-exit{
+    margin: 0 0 0 80px;
+} 

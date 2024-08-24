@@ -1,6 +1,10 @@
+.reviews_show{
+    width: 100px;
+}
+
 .janela_review{
     padding: 12px;
-    width: 400px;
+    width: 350px;
     height: 170px;
     margin: 20px;
     overflow-y: auto;
