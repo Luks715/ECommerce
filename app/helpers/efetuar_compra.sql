@@ -42,20 +42,20 @@ BEGIN
       AND foi_pago = FALSE;
 
     -- Cria registros em ClienteVendedor e ClienteProduto
-    INSERT INTO cliente_vendedors(cliente_id, vendedor_id, created_at, updated_at)
-    SELECT DISTINCT id_do_cliente, pr.vendedor_id, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
-    FROM pedidos p
-    JOIN produtos pr ON pr.id = p.produto_id
-    WHERE p.cliente_id = id_do_cliente;
+    -- INSERT INTO cliente_vendedors(cliente_id, vendedor_id, created_at, updated_at)
+    -- SELECT DISTINCT id_do_cliente, pr.vendedor_id, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    -- FROM pedidos p
+    -- JOIN produtos pr ON pr.id = p.produto_id
+    -- WHERE p.cliente_id = id_do_cliente;
 
-    INSERT INTO cliente_produtos(cliente_id, produto_id, created_at, updated_at)
-    SELECT DISTINCT id_do_cliente, produto_id, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
-    FROM pedidos
-    WHERE cliente_id = id_do_cliente;
+    -- INSERT INTO cliente_produtos(cliente_id, produto_id, created_at, updated_at)
+    -- SELECT DISTINCT id_do_cliente, produto_id, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    -- FROM pedidos
+    -- WHERE cliente_id = id_do_cliente;
 
     -- Cria histórico
-    INSERT INTO historicos(cliente_nome, vendedor_nome, produto_nome, quantidade, data_compra, created_at, updated_at)
-    SELECT u.nome, vu.nome, p.nome, pd.quantidade, CURRENT_DATE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    INSERT INTO historicos(cliente_nome, vendedor_nome, produto_nome, quantidade, data_compra, review_do_produto, review_do_vendedor, created_at, updated_at)
+    SELECT u.nome, vu.nome, p.nome, pd.quantidade, CURRENT_DATE, FALSE, FALSE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
     FROM pedidos pd
     JOIN produtos p ON p.id = pd.produto_id
     JOIN users u ON u.id = pd.cliente_id

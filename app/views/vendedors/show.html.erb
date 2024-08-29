@@ -18,7 +18,7 @@
                 <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
 
                 <% if user_signed_in?  && current_user.Cliente? %>
-                    <% if ClienteVendedor.find_by(cliente: current_user.cliente, vendedor: @vendedor).present? %>
+                    <% if Historico.find_by(cliente_nome: current_user.nome, vendedor_nome: @vendedor.user.nome, review_do_vendedor: false).present? %>
                         <%= link_to "Escreva uma review", new_review_vendedor_path(vendedor_id: @vendedor.id) %>
                     <% end %>
                 <% elsif user_signed_in?  && current_user.Vendedor? && (@vendedor = current_user.vendedor) %>

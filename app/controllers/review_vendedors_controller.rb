@@ -14,7 +14,7 @@ class ReviewVendedorsController < ApplicationController
     @reviewVendedor.cliente = current_user.cliente
 
     if  @reviewVendedor.save
-      ClienteVendedor.find_by(vendedor:  @reviewVendedor.vendedor, cliente:  @reviewVendedor.cliente).destroy
+      Historico.find_by(vendedor_nome:  @reviewVendedor.vendedor.user.nome, cliente_nome:  @reviewVendedor.cliente.user.nome).update(review_do_vendedor: true)
       redirect_to vendedor_path( @reviewVendedor.vendedor), notice: 'Review de vendedor criada com sucesso.'
     else
       render :new, status: :unprocessable_entity
