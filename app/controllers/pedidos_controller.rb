@@ -38,7 +38,10 @@ class PedidosController < ApplicationController
 
   def destroy
     if params[:pedidos_ids].present?
-      Pedido.where(id: params[:pedidos_ids], cliente: current_user.cliente).destroy_all
+      ActiveRecord::Base.connection.execute("SELECT destroy_pedidos(#{pedidos_ids}, #{current_user.cliente})")
+      
+      ### Código Antigo ###
+      # Pedido.where(id: params[:pedidos_ids], cliente: current_user.cliente).destroy_all
       flash[:notice] = "Pedidos marcados como recebidos e removidos com sucesso."
     else
       flash[:alert] = "Nenhum pedido foi selecionado."

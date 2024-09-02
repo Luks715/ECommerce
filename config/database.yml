@@ -8,8 +8,8 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: lucas
-  password: Lts9406338
+  username:
+  password:
   host: localhost
 
 development:
@@ -23,5 +23,5 @@ test:
 production:
   <<: *default
   database: ECommerce2_production
-  username: lucas
+  username:
   password: <%= ENV['DATABASE_PASSWORD'] %>
