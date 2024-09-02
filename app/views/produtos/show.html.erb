@@ -17,12 +17,15 @@
             <div class="imagem">
                 <% if @produto.imagem.present? %>
                     <% 
-                        # Converte o binário da imagem para Base64
-                        base64_image = Base64.encode64(@produto.imagem)
+                        # Remove o prefixo \x (se houver) e converte hexadecimal para binário
+                        hex_data = @produto.imagem.gsub(/\\x/, '')
+                        binary_data = [hex_data].pack('H*')
                         
-                        # Determina o tipo MIME com base na extensão do arquivo se possível
-                        # Aqui você pode definir manualmente se conhece o tipo da imagem
-                        mime_type = 'image/png' # ou 'image/png', dependendo do tipo de imagem
+                        # Codifica o binário em Base64
+                        base64_image = Base64.encode64(binary_data)
+                        
+                        # Define o tipo MIME da imagem, ajuste conforme necessário
+                        mime_type = 'image/png' # ou 'image/jpeg', dependendo do tipo de imagem
                         
                         # Cria o data URI para a imagem
                         image_src = "data:#{mime_type};base64,#{base64_image}"
@@ -31,6 +34,7 @@
                 <% else %>
                     <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
                 <% end %>
+
 
                 <div class="interacao">
                     <% if user_signed_in? && current_user.Cliente? %>
