@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_24_191601) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_24_191703) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,24 +28,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_24_191601) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "cliente_produtos", force: :cascade do |t|
-    t.bigint "cliente_id", null: false
-    t.bigint "produto_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["cliente_id"], name: "index_cliente_produtos_on_cliente_id"
-    t.index ["produto_id"], name: "index_cliente_produtos_on_produto_id"
-  end
-
-  create_table "cliente_vendedors", force: :cascade do |t|
-    t.bigint "cliente_id", null: false
-    t.bigint "vendedor_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["cliente_id"], name: "index_cliente_vendedors_on_cliente_id"
-    t.index ["vendedor_id"], name: "index_cliente_vendedors_on_vendedor_id"
-  end
-
   create_table "clientes", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "cpf", null: false
@@ -61,6 +43,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_24_191601) do
     t.string "produto_nome", null: false
     t.integer "quantidade", null: false
     t.date "data_compra", null: false
+    t.boolean "review_do_produto", null: false
+    t.boolean "review_do_vendedor", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -152,10 +136,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_24_191601) do
   end
 
   add_foreign_key "carrinhos", "users"
-  add_foreign_key "cliente_produtos", "clientes"
-  add_foreign_key "cliente_produtos", "produtos"
-  add_foreign_key "cliente_vendedors", "clientes"
-  add_foreign_key "cliente_vendedors", "vendedors"
   add_foreign_key "clientes", "users"
   add_foreign_key "pedidos", "carrinhos"
   add_foreign_key "pedidos", "clientes"

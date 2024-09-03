@@ -20,15 +20,18 @@ class CarrinhosController < ApplicationController
       else
         redirect_to carrinho_path(@carrinho), notice: 'Saldo insuficiente'
       end
+
     elsif params[:send_purchases]
       if params[:carrinho].present? && params[:carrinho][:pedidos_ids].present?
         pedidos_ids = params[:carrinho][:pedidos_ids]
-        ActiveRecord::Base.connection.execute("SELECT update_pedidos_enviados(#{pedidos_ids})")
-        
-        ### Código Antigo ###
-        # Pedido.where(id: pedidos_ids).each do |pedido|
-          # pedido.update(foi_enviado: true)
-        #end
+
+        array_literal = "{#{pedidos_ids.join(',')}}"
+
+        sanitized_ids = ActiveRecord::Base.sanitize_sql_array(["SELECT update_pedidos_enviados(?)", array_literal])
+        ActiveRecord::Base.connection.execute(sanitized_ids)
+
+        # Código Antigo (Comentado)
+        # Pedido.where(id: pedidos_ids).update_all(foi_enviado: true)
       else
         flash[:alert] = "Nenhum pedido foi selecionado."
       end

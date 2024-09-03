@@ -1,4 +1,4 @@
-class CreateProcedureUpdatePedidosEnviados < ActiveRecord::Migration[6.1]
+class CreateProcedureUpdatePedidosEnviados < ActiveRecord::Migration[7.1]
   def up
     execute <<-SQL
       CREATE OR REPLACE FUNCTION update_pedidos_enviados(pedidos_ids BIGINT[])

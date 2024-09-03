@@ -14,7 +14,7 @@ class ReviewProdutosController < ApplicationController
     @reviewProduto.cliente = current_user.cliente
 
     if @reviewProduto.save
-      Historico.find_by(produto: @reviewProduto.produto.nome, cliente: @reviewProduto.cliente.user.nome).update(review_do_produto: true)
+      Historico.find_by(produto_nome: @reviewProduto.produto.nome, cliente_nome: @reviewProduto.cliente.user.nome).update(review_do_produto: true)
       redirect_to @reviewProduto.produto, notice: 'Review de produto criada com sucesso.'
     else
       render :new, status: :unprocessable_entity
