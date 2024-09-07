@@ -6,9 +6,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # Sobrescrevendo o método create para adicionar debug de erros de validação
   def create
     build_resource(sign_up_params)
-
-    # Construir as associações nested dependendo do role
-    build_associations_for_role
+    build_associations_for_role(resource)
 
     if resource.save
       if resource.active_for_authentication?
@@ -30,6 +28,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   private
+  # Helper para construir associações dependendo do role
+  def build_associations_for_role(user)
+    if user.Cliente?
+      user.build_cliente(cliente_params)
+    elsif user.Vendedor?
+      user.build_vendedor(vendedor_params)
+    end
+  end
+
+  def cliente_params
+    params[:user][:cliente_attributes].permit(:cpf)
+  end
+
+  def vendedor_params
+    params[:user][:vendedor_attributes].permit(:cnpj, :email_para_contato)
+  end
 
   # Permite os parâmetros adicionais durante a criação da conta
   def sign_up_params
@@ -57,15 +71,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # Configura parâmetros para a atualização de conta
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, keys: [:nome, :telefone, :endereco, :role, cliente_attributes: [:cpf], vendedor_attributes: [:cnpj, :email_para_contato]])
-  end
-
-  # Helper para construir associações dependendo do role
-  def build_associations_for_role
-    if resource.Cliente? && resource.cliente.nil?
-      resource.build_cliente
-    elsif resource.Vendedor? && resource.vendedor.nil?
-      resource.build_vendedor
-    end
   end
 
   # Define o caminho após o sign up

@@ -1,7 +1,7 @@
 class Cliente < ApplicationRecord
   after_initialize :set_default_saldo, if: :new_record?
 
-  belongs_to :user
+  belongs_to :user, inverse_of: :cliente
   has_many :reviews
 
   #tabela de associação entre vendedores que o cliente pode avaliar

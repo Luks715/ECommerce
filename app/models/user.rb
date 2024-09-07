@@ -12,11 +12,10 @@ class User < ApplicationRecord
   validates :role, presence: true
 
   has_one :carrinho, dependent: :destroy
-
   has_one :cliente, dependent: :destroy, inverse_of: :user
-  accepts_nested_attributes_for :cliente, allow_destroy: true
-
   has_one :vendedor, dependent: :destroy, inverse_of: :user
+
+  accepts_nested_attributes_for :cliente, allow_destroy: true
   accepts_nested_attributes_for :vendedor, allow_destroy: true
 
 

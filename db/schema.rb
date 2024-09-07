@@ -127,8 +127,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_24_191703) do
 
   create_table "vendedors", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "email_para_contato", null: false
     t.string "cnpj", null: false
+    t.string "email_para_contato", null: false
     t.decimal "carteira", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

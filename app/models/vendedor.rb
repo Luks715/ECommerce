@@ -1,7 +1,7 @@
 class Vendedor < ApplicationRecord
   after_initialize :set_default_values, if: :new_record?
 
-  belongs_to :user, class_name: "User", foreign_key: "user_id"
+  belongs_to :user, class_name: "User", foreign_key: "user_id", inverse_of: :vendedor
   has_many :review_vendedors, dependent: :destroy
 
   has_many :produtos, dependent: :destroy

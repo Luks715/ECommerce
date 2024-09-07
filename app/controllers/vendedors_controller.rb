@@ -33,6 +33,6 @@ class VendedorsController < ApplicationController
   private
 
   def set_vendedor
-    @vendedor = Vendedor.find(params[:id, :email_para_contato, :cnpj])
+    @vendedor = Vendedor.find(params[:id])
   end
 end

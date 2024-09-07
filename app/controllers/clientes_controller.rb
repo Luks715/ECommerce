@@ -29,6 +29,6 @@ class ClientesController < ApplicationController
   private
 
   def set_cliente
-    @cliente = Cliente.find(params[:id, :cpf])
+    @cliente = Cliente.find(params[:id])
   end
 end

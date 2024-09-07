@@ -61,8 +61,10 @@
        <!-- Radio buttons para selecionar Cliente ou Vendedor -->
         <div class="field">
           <%= user_form.label :role, "Tipo de Usuário" %><br />
+
           <%= user_form.radio_button :role, 'Cliente', id: 'role_cliente' %>
           <%= user_form.label :role, 'Cliente', for: 'role_cliente' %>
+
           <%= user_form.radio_button :role, 'Vendedor', id: 'role_vendedor' %>
           <%= user_form.label :role, 'Vendedor', for: 'role_vendedor' %>
         </div>
@@ -70,13 +72,30 @@
         <!-- Campos adicionais para Cliente e Vendedor -->
         <div id="cliente_fields" style="display: none;">
           <%= user_form.fields_for :clientes do |cliente_form| %>
-            <%= render 'cliente_fields', f: cliente_form %>
+            <div class="caixa_atributo_valor">
+              <div class="atributo">
+                CPF
+              </div>
+              <%= cliente_form.text_field :cpf, class: 'text-field', name: 'user[cliente_attributes][cpf]' %>
+            </div>
           <% end %>
         </div>
 
        <div id="vendedor_fields" style="display: none;">
           <%= user_form.fields_for :vendedors do |vendedor_form| %>
-            <%= render 'vendedor_fields', f: vendedor_form %>
+            <div class="caixa_atributo_valor">
+              <div class="atributo">
+                CNPJ
+              </div>
+              <%= vendedor_form.text_field :cnpj, class: 'text-field', name: 'user[cliente_attributes][cnpj]' %>
+            </div>
+
+            <div class="caixa_atributo_valor">
+              <div class="atributo">
+                Email para contato
+              </div>
+              <%= vendedor_form.text_field :email_para_contato, class: 'text-field', name: 'user[cliente_attributes][email_para_contato]' %>
+            </div>
           <% end %>
         </div>
 
