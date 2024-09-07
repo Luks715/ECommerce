@@ -33,11 +33,19 @@ class CreateProcedureApagarProduto < ActiveRecord::Migration[7.1]
         ) AS subquery
         WHERE v.id = subquery.vendedor_id;
 
+        -- Remove as referências nas tabelas relacionadas
+        DELETE FROM review_produtos
+        WHERE produto_id = produto_apagado_id;
+
         -- Remove os pedidos
         DELETE FROM pedidos
         WHERE produto_id = produto_apagado_id
           AND foi_pago = TRUE
           AND foi_enviado = FALSE;
+
+        -- Remove o produto
+        DELETE FROM produtos
+        WHERE id = produto_apagado_id;
       END;
       $$ LANGUAGE plpgsql;
     SQL

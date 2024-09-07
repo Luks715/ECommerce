@@ -2,7 +2,7 @@
   <div class="janela_nova_conta">
     <div class="barra_azul">
       <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
-      <%= ". Criar conta" %>
+      <%= ". Criar conta"%>
       <div class="botao-exit">
         <%= form_with url: destroy_user_session_path, method: :delete, local: true do %>
           <button type="submit">
@@ -16,13 +16,14 @@
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |user_form| %>
         <%= render "devise/shared/error_messages", resource: resource %>
 
-        <div class="caixa_atributo_valor">
+        <!-- Campos comuns para todos os tipos de usuário -->
+         <div class="caixa_atributo_valor">
           <div class="atributo">
             Nome
           </div>
           <%= user_form.text_field :nome %>
         </div>
-
+        
         <div class="caixa_atributo_valor">
           <div class="atributo">
             Email
@@ -57,40 +58,32 @@
           <%= user_form.password_field :password_confirmation, autocomplete: "new-password" %>
         </div>
 
-        <div class="caixa_atributo_valor">
-          <div class="atributo">
-            Tipo de Usuário
-          </div>
-          <div class="valor_user">
-            <div class="radio_cliente">
-              <%= user_form.radio_button :role, 'Cliente', id: 'role_cliente' %>
-              <%= user_form.label :role, 'Cliente', for: 'role_cliente' %>
-            </div>
-
-            <div class="radio_vendedor">
-              <%= user_form.radio_button :role, 'Vendedor', id: 'role_vendedor' %>
-              <%= user_form.label :role, 'Vendedor', for: 'role_vendedor' %>
-            </div>                   
-          </div>
+       <!-- Radio buttons para selecionar Cliente ou Vendedor -->
+        <div class="field">
+          <%= user_form.label :role, "Tipo de Usuário" %><br />
+          <%= user_form.radio_button :role, 'Cliente', id: 'role_cliente' %>
+          <%= user_form.label :role, 'Cliente', for: 'role_cliente' %>
+          <%= user_form.radio_button :role, 'Vendedor', id: 'role_vendedor' %>
+          <%= user_form.label :role, 'Vendedor', for: 'role_vendedor' %>
         </div>
 
+        <!-- Campos adicionais para Cliente e Vendedor -->
         <div id="cliente_fields" style="display: none;">
-          <%= user_form.fields_for :cliente do |cliente_form| %>
-            <%= render 'clientes/cliente_fields', f: cliente_form %>
+          <%= user_form.fields_for :clientes do |cliente_form| %>
+            <%= render 'cliente_fields', f: cliente_form %>
           <% end %>
         </div>
 
-        <div id="vendedor_fields" style="display: none;">
-          <%= user_form.fields_for :vendedor do |vendedor_form| %>
-            <%= render 'vendedors/vendedor_fields', f: vendedor_form %>
+       <div id="vendedor_fields" style="display: none;">
+          <%= user_form.fields_for :vendedors do |vendedor_form| %>
+            <%= render 'vendedor_fields', f: vendedor_form %>
           <% end %>
         </div>
 
         <div class="actions">
-          <%= user_form.submit "Criar conta" %>
+          <%= user_form.submit "Criar Conta" %>
         </div>
       <% end %>
-
       <%= render "devise/shared/links" %>
     </div>
   </div>
@@ -112,7 +105,6 @@
       vendedorFields.style.display = 'block';
     }
   }
-
   clienteRadio.addEventListener('change', toggleFields);
   vendedorRadio.addEventListener('change', toggleFields);
 
@@ -120,9 +112,3 @@
   toggleFields();
 });
 </script>
-
-<div class="footer">
-  <div>
-    <img src="<%= asset_path('windows-logo.png') %>" alt="logo windows">
-  </div>
-</div>

@@ -15,26 +15,11 @@
 
         <div class="janela_produto_data">
             <div class="imagem">
-                <% if @produto.imagem.present? %>
-                    <% 
-                        # Remove o prefixo \x (se houver) e converte hexadecimal para binário
-                        hex_data = @produto.imagem.gsub(/\\x/, '')
-                        binary_data = [hex_data].pack('H*')
-                        
-                        # Codifica o binário em Base64
-                        base64_image = Base64.encode64(binary_data)
-                        
-                        # Define o tipo MIME da imagem, ajuste conforme necessário
-                        mime_type = 'image/png' # ou 'image/jpeg', dependendo do tipo de imagem
-                        
-                        # Cria o data URI para a imagem
-                        image_src = "data:#{mime_type};base64,#{base64_image}"
-                    %>
-                    <img src="<%= image_src %>" alt="Imagem do Produto">
+               <% if @produto.imagem.present? %>
+                    <%= image_tag "data:image/png;base64,#{Base64.encode64(@produto.imagem)}", alt: @produto.nome %>
                 <% else %>
-                    <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
+                    <img src="<%= asset_path('windows_!_icon.png') %>" alt="Imagem do Produto">
                 <% end %>
-
 
                 <div class="interacao">
                     <% if user_signed_in? && current_user.Cliente? %>

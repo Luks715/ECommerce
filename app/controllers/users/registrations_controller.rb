@@ -1,13 +1,82 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_account_update_params, only: [:update]
+
+
+  # Sobrescrevendo o método create para adicionar debug de erros de validação
+  def create
+    build_resource(sign_up_params)
+
+    # Construir as associações nested dependendo do role
+    build_associations_for_role
+
+    if resource.save
+      if resource.active_for_authentication?
+        set_flash_message! :notice, :signed_up
+        sign_up(resource_name, resource)
+        respond_with resource, location: after_sign_up_path_for(resource)
+      else
+        set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+        expire_data_after_sign_in!
+        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+      end
+    else
+      # Exibe erros de validação no console
+      puts resource.errors.full_messages
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
+  end
+
   private
 
   # Permite os parâmetros adicionais durante a criação da conta
   def sign_up_params
-    params.require(:user).permit(:nome, :email, :telefone, :endereco, :password, :password_confirmation, :role, cliente_attributes: [:campo_cliente_1, :campo_cliente_2], vendedor_attributes: [:campo_vendedor_1, :campo_vendedor_2])
+    params.require(:user).permit(
+      :nome, :email, :telefone, :endereco, :password, :password_confirmation, :role,
+      cliente_attributes: [:cpf],
+      vendedor_attributes: [:cnpj, :email_para_contato]
+    )
   end
 
   # Permite os parâmetros adicionais durante a atualização da conta
   def account_update_params
-    params.require(:user).permit(:nome, :email, :telefone, :endereco, :password, :password_confirmation, :current_password, :role, cliente_attributes: [:campo_cliente_1, :campo_cliente_2], vendedor_attributes: [:campo_vendedor_1, :campo_vendedor_2])
+    params.require(:user).permit(
+      :nome, :email, :telefone, :endereco, :password, :password_confirmation, :current_password, :role,
+      cliente_attributes: [:cpf],
+      vendedor_attributes: [:cnpj, :email_para_contato]
+    )
+  end
+
+  # Configura parâmetros para o sign up
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:nome, :telefone, :endereco, :role, cliente_attributes: [:cpf], vendedor_attributes: [:cnpj, :email_para_contato]])
+  end
+
+  # Configura parâmetros para a atualização de conta
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:nome, :telefone, :endereco, :role, cliente_attributes: [:cpf], vendedor_attributes: [:cnpj, :email_para_contato]])
+  end
+
+  # Helper para construir associações dependendo do role
+  def build_associations_for_role
+    if resource.Cliente? && resource.cliente.nil?
+      resource.build_cliente
+    elsif resource.Vendedor? && resource.vendedor.nil?
+      resource.build_vendedor
+    end
+  end
+
+  # Define o caminho após o sign up
+  def after_sign_up_path_for(resource)
+    # Defina o caminho desejado após o sign up
+    root_path
+  end
+
+  # Define o caminho após a atualização de conta
+  def after_update_path_for(resource)
+    # Defina o caminho desejado após a atualização de conta
+    edit_user_registration_path
   end
 end

@@ -1,3 +1,41 @@
+# db/seeds.rb
+
+# Criação de um usuário Cliente
+user_cliente = User.create!(
+  nome: 'Cliente Teste',
+  email: 'cliente@example.com',
+  telefone: '123456789',
+  endereco: 'Rua Cliente, 123',
+  password: 'senha123',
+  password_confirmation: 'senha123',
+  role: 'Cliente',
+  cliente_attributes: {
+    cpf: '123.456.789-00'
+  }
+)
+
+puts "Criado usuário Cliente: #{user_cliente.nome} com CPF #{user_cliente.cliente.cpf}"
+
+# Criação de um usuário Vendedor
+user_vendedor = User.create!(
+  nome: 'Vendedor Teste',
+  email: 'vendedor@example.com',
+  telefone: '987654321',
+  endereco: 'Rua Vendedor, 321',
+  password: 'senha123',
+  password_confirmation: 'senha123',
+  role: 'Vendedor',
+  vendedor_attributes: {
+    cnpj: '12.345.678/0001-00',
+    email_para_contato: 'contato@vendedor.com'
+  }
+)
+
+puts "Criado usuário Vendedor: #{user_vendedor.nome} com CNPJ #{user_vendedor.vendedor.cnpj}"
+
+# Adicione mais usuários conforme necessário...
+
+
 # Criando cliente
 cliente_user = User.create!(
   nome: "João Silva",
@@ -10,13 +48,13 @@ cliente_user = User.create!(
 
 cliente1 = Cliente.create!(
   user: cliente_user,
-  cpf: "123.456.789-00",
+  cpf: "123.456.789-01",
   saldo: 1000,
 )
 
 # Criando vendedor
 user_vendedor = User.create!(
-  email: 'vendedor@example.com',
+  email: 'plutarco_comercios@example.com',
   password: 'password123',
   telefone: "1198234",
   endereco: "Rua das Flores, 123, Xique-Xique - RJ",
@@ -26,7 +64,7 @@ user_vendedor = User.create!(
 
 vendedor = Vendedor.create!(
   email_para_contato: 'vendedor@example.com',
-  cnpj: "123.456.489-10",
+  cnpj: "123.456.489-1120",
   user: user_vendedor
 )
 
