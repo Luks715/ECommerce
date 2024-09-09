@@ -5,11 +5,11 @@
 #   gem "sqlite3"
 #
 default: &default
-  adapter: postgresql
+  adapter: sqlite3
   encoding: unicode
   pool: 5
-  username: lucas
-  password: Lts9406338
+  username: gui
+  password: unb2024
   host: localhost
 
 development:
@@ -23,5 +23,5 @@ test:
 production:
   <<: *default
   database: ECommerce2_production
-  username: lucas
+  username: gui
   password: <%= ENV['DATABASE_PASSWORD'] %>
