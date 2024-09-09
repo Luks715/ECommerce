@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('click', function() {
+  try{
     var btn_produtos_index = document.getElementById('btn_produtos_index');
     var btn_categoria_index = document.getElementById('btn_categoria_index');
     var btn_vendedores_index = document.getElementById('btn_vendedores_index');
@@ -27,5 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
       categorium_content.style.display = 'none';
       vendedores_content.style.display = 'none';
     }
+  }
+  catch{
+    console.log();
+  }
   });
   
