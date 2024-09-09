@@ -13,6 +13,13 @@ Rails.application.routes.draw do
   resources :review_vendedors
   resources :produtos
 
+  # Mudança para exibir a imagem depois de criado
+  resources :produtos do
+    member do
+      get 'exibir_imagem'
+    end
+  end
+  
   post 'criar_pedido', to: 'pedidos#create'
 
   delete 'pedidos/destroy', to: 'pedidos#destroy', as: 'pedidos_destroy'
