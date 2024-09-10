@@ -1,4 +1,3 @@
-Caso não queira deixar seu produto em promoção, coloque um zero no campo Desconto e deixe o campo Data vazio
 <%= form_with model: @produto, method: :post, local: true do |form| %>    
     <div class="vendedor_show">
         <div class="janela_produto">
@@ -24,7 +23,7 @@ Caso não queira deixar seu produto em promoção, coloque um zero no campo Desc
                 <div class="criar_data">
                     <div class="caixa_atributo_valor">
                         <div class="atributo">
-                            Nome
+                            Nome                    
                         </div>
                         <%= form.text_field :nome %>
                     </div>
@@ -88,16 +87,12 @@ Caso não queira deixar seu produto em promoção, coloque um zero no campo Desc
                     </div>
                 </div>
             </div>
-
+            Deixe o campo "Desconto" como 0 se não quiser fazer uma promoção
+            <br>
+            Nesse caso, também deixe o campo "Data" vazio
             <div class="actions">
                 <%= form.submit "Criar Produto" %>
             </div>
         </div>
     </div>
 <% end %>
-
-<div class="footer">
-    <div>
-        <img src="<%= asset_path('windows-logo.png') %>" alt="logo windows">
-    </div>
-</div>

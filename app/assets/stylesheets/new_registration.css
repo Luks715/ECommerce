@@ -1,0 +1,10 @@
+.nova_conta_view .janela_nova_conta .nova_conta_data{
+    position: relative;
+    display: flex;
+}
+
+.nova_conta_view .janela_nova_conta .nova_conta_data img{
+    height: 180px;
+    width: 200px;
+    box-shadow: inset 2px 2px #000, 2px 2px #fff;
+}

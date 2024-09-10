@@ -15,14 +15,20 @@ class CreateProcedureEfetuarCompra < ActiveRecord::Migration[7.1]
           -- Atualiza a carteira dos vendedores
           UPDATE vendedors v
           SET carteira = v.carteira + subquery.subtotal
-          FROM (
-              SELECT pr.vendedor_id, pd.quantidade * pr.preco AS subtotal
-              FROM pedidos pd
-              JOIN produtos pr ON pr.id = pd.produto_id
-              WHERE pd.cliente_id = id_do_cliente
-                AND pd.foi_pago = FALSE
-          ) AS subquery
+          FROM "Preco Compra" AS subquery
           WHERE v.id = subquery.vendedor_id;
+
+          -- Atualiza a carteira dos vendedores
+          --UPDATE vendedors v
+          --SET carteira = v.carteira + subquery.subtotal
+          --FROM (
+          --    SELECT pr.vendedor_id, pd.quantidade * pr.preco AS subtotal
+          --    FROM pedidos pd
+          --    JOIN produtos pr ON pr.id = pd.produto_id
+          --    WHERE pd.cliente_id = id_do_cliente
+          --      AND pd.foi_pago = FALSE
+          --) AS subquery
+          --WHERE v.id = subquery.vendedor_id;
 
           -- Marca os pedidos como pagos
           UPDATE pedidos

@@ -16,93 +16,104 @@
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |user_form| %>
         <%= render "devise/shared/error_messages", resource: resource %>
 
-        <!-- Campos comuns para todos os tipos de usuário -->
-         <div class="caixa_atributo_valor">
-          <div class="atributo">
-            Nome
+        <div class="imagem">
+          <img src="<%= asset_path('windows_!_icon.png') %>" alt="iconezinho windows">
+
+          <div class="field" class="coluna">
+            <%= user_form.file_field :imagem %>
           </div>
-          <%= user_form.text_field :nome %>
-        </div>
-        
-        <div class="caixa_atributo_valor">
-          <div class="atributo">
-            Email
-          </div>
-           <%= user_form.email_field :email %>
         </div>
 
-        <div class="caixa_atributo_valor">
-          <div class="atributo">
-            Telefone
-          </div>
-            <%= user_form.text_field :telefone %>
-        </div>
-
-        <div class="caixa_atributo_valor">
-          <div class="atributo">
-            Endereço
-          </div>
-            <%= user_form.text_field :endereco %>
-        </div>
-
-        <div class="field">
-          <%= user_form.label :password %>
-          <% if @minimum_password_length %>
-          <em>(<%= @minimum_password_length %> caracteres no mínimo)</em>
-          <% end %><br />
-          <%= user_form.password_field :password, autocomplete: "new-password" %>
-        </div>
-
-        <div class="field">
-          <%= user_form.label :password_confirmation %><br />
-          <%= user_form.password_field :password_confirmation, autocomplete: "new-password" %>
-        </div>
-
-       <!-- Radio buttons para selecionar Cliente ou Vendedor -->
-        <div class="field">
-          <%= user_form.label :role, "Tipo de Usuário" %><br />
-
-          <%= user_form.radio_button :role, 'Cliente', id: 'role_cliente' %>
-          <%= user_form.label :role, 'Cliente', for: 'role_cliente' %>
-
-          <%= user_form.radio_button :role, 'Vendedor', id: 'role_vendedor' %>
-          <%= user_form.label :role, 'Vendedor', for: 'role_vendedor' %>
-        </div>
-
-        <!-- Campos adicionais para Cliente e Vendedor -->
-        <div id="cliente_fields" style="display: none;">
-          <%= user_form.fields_for :clientes do |cliente_form| %>
-            <div class="caixa_atributo_valor">
-              <div class="atributo">
-                CPF
-              </div>
-              <%= cliente_form.text_field :cpf, class: 'text-field', name: 'user[cliente_attributes][cpf]' %>
+        <div class="new_user_info">
+          <!-- Campos comuns para todos os tipos de usuário -->
+          <div class="caixa_atributo_valor">
+            <div class="atributo">
+              Nome
             </div>
-          <% end %>
-        </div>
-
-       <div id="vendedor_fields" style="display: none;">
-          <%= user_form.fields_for :vendedors do |vendedor_form| %>
-            <div class="caixa_atributo_valor">
-              <div class="atributo">
-                CNPJ
-              </div>
-              <%= vendedor_form.text_field :cnpj, class: 'text-field', name: 'user[vendedor_attributes][cnpj]' %>
+            <%= user_form.text_field :nome %>
+          </div>
+          
+          <div class="caixa_atributo_valor">
+            <div class="atributo">
+              Email
             </div>
+            <%= user_form.email_field :email %>
+          </div>
 
-            <div class="caixa_atributo_valor">
-              <div class="atributo">
-                Email para contato
-              </div>
-              <%= vendedor_form.text_field :email_para_contato, class: 'text-field', name: 'user[vendedor_attributes][email_para_contato]' %>
+          <div class="caixa_atributo_valor">
+            <div class="atributo">
+              Telefone
             </div>
-          <% end %>
+              <%= user_form.text_field :telefone %>
+          </div>
+
+          <div class="caixa_atributo_valor">
+            <div class="atributo">
+              Endereço
+            </div>
+              <%= user_form.text_field :endereco %>
+          </div>
+
+          <div class="field">
+            <%= user_form.label :password %>
+            <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> caracteres no mínimo)</em>
+            <% end %><br />
+            <%= user_form.password_field :password, autocomplete: "new-password" %>
+          </div>
+
+          <div class="field">
+            <%= user_form.label :password_confirmation %><br />
+            <%= user_form.password_field :password_confirmation, autocomplete: "new-password" %>
+          </div>
+
+          <!-- Radio buttons para selecionar Cliente ou Vendedor -->
+          <div class="field">
+            <%= user_form.label :role, "Tipo de Usuário" %><br />
+
+            <%= user_form.radio_button :role, 'Cliente', id: 'role_cliente' %>
+            <%= user_form.label :role, 'Cliente', for: 'role_cliente' %>
+
+            <%= user_form.radio_button :role, 'Vendedor', id: 'role_vendedor' %>
+            <%= user_form.label :role, 'Vendedor', for: 'role_vendedor' %>
+          </div>
+
+          <!-- Campos adicionais para Cliente e Vendedor -->
+          <div id="cliente_fields" style="display: none;">
+            <%= user_form.fields_for :clientes do |cliente_form| %>
+              <div class="caixa_atributo_valor">
+                <div class="atributo">
+                  CPF
+                </div>
+                <%= cliente_form.text_field :cpf, class: 'text-field', name: 'user[cliente_attributes][cpf]' %>
+              </div>
+            <% end %>
+          </div>
+
+          <div id="vendedor_fields" style="display: none;">
+            <%= user_form.fields_for :vendedors do |vendedor_form| %>
+              <div class="caixa_atributo_valor">
+                <div class="atributo">
+                  CNPJ
+                </div>
+                <%= vendedor_form.text_field :cnpj, class: 'text-field', name: 'user[vendedor_attributes][cnpj]' %>
+              </div>
+
+              <div class="caixa_atributo_valor">
+                <div class="atributo">
+                  Email para contato
+                </div>
+                <%= vendedor_form.text_field :email_para_contato, class: 'text-field', name: 'user[vendedor_attributes][email_para_contato]' %>
+              </div>
+            <% end %>
+          </div>
         </div>
 
         <div class="actions">
           <%= user_form.submit "Criar Conta" %>
         </div>
       <% end %>
+
       <%= render "devise/shared/links" %>
     </div>
   </div>
