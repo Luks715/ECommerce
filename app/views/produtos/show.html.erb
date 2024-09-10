@@ -14,8 +14,8 @@
 
         <div class="janela_produto_data">
             <div class="imagem">
-               <% if @produto.imagem.present? %>
-                    <%= image_tag "data:image/png;base64,#{Base64.encode64(@produto.imagem)}", alt: @produto.nome %>
+                <% if @produto.imagem.present? %>
+                    <%= image_tag exibir_imagem_produto_path(@produto), alt: @produto.nome %>
                 <% else %>
                     <img src="<%= asset_path('windows_!_icon.png') %>" alt="Imagem do Produto">
                 <% end %>

@@ -7,6 +7,10 @@ class Produto < ApplicationRecord
   has_many :cliente_produtos, dependent: :destroy
   has_many :clientes, through: :cliente_produtos
 
+  has_one_attached :imagem  # Mudança para preview da imagem
+
+  before_save :convert_image_to_binary # Mudança para exibir a imagem depois de criado
+
   validates :nome, presence: true
   validates :descricao, presence: true
   validates :preco, presence: true
@@ -14,6 +18,13 @@ class Produto < ApplicationRecord
   validates :desconto, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 
   validate :data_fim_deve_ser_futura, if: -> { data_fim.present? }
+
+  # Mudança para exibir a imagem depois de criado
+  def convert_image_to_binary
+    if self.imagem.respond_to?(:read)
+      self.imagem = self.imagem.read
+    end
+  end
 
   def preco_promocional
     if self.emPromocao

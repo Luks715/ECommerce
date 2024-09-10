@@ -9,7 +9,15 @@ class ProdutosController < ApplicationController
   end
 
   def exibir_imagem
-    send_data produto.imagem, type: produto.imagem.content_type, disposition: 'inline'
+    # send_data produto.imagem, type: produto.imagem.content_type, disposition: 'inline'
+    
+    # Mudança para exibir a imagem depois de criado
+    if @produto.imagem.present?
+      send_data @produto.imagem, type: 'image/png', disposition: 'inline'
+    else
+      # Exibir uma imagem padrão, caso a imagem não exista
+      redirect_to asset_path('windows_!_icon.png')
+    end
   end
 
   def new
@@ -20,6 +28,10 @@ class ProdutosController < ApplicationController
 
   def create
     @produto = current_user.vendedor.produtos.build(produto_params)
+    
+    # Verificação do valor da imagem
+    Rails.logger.debug "Imagem recebida: #{params[:produto][:imagem].inspect}"
+
     if @produto.save
       redirect_to vendedor_path(@produto.vendedor), notice: 'Produto criado com sucesso.'
     else
