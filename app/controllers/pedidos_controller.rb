@@ -37,16 +37,9 @@ class PedidosController < ApplicationController
   end
 
   def destroy
-    if params[:pedidos_ids].present?
-      pedidos_ids = params[:pedidos_ids]
+    pedidos_ids = params[:pedidos_ids]
 
-      # Converte o array de IDs para o formato de array literal do PostgreSQL
-      array_literal = "{#{pedidos_ids.join(',')}}"
-
-      # Usa a interpolação segura para garantir a sintaxe correta
-      sanitized_ids = ActiveRecord::Base.sanitize_sql_array(["SELECT destroy_pedidos(?)", array_literal])
-      ActiveRecord::Base.connection.execute(sanitized_ids)
-
+    if Pedido.destroy_pedidos(pedidos_ids)
       flash[:notice] = "Pedidos marcados como recebidos e removidos com sucesso."
     else
       flash[:alert] = "Nenhum pedido foi selecionado."

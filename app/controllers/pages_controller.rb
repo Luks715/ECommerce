@@ -1,12 +1,5 @@
-##
 # Controller responsável pelas ações relacionadas às páginas.
 class PagesController < ApplicationController
-  #Ação que redireciona para a página inicial do programa
-
-  # Esta ação busca o registro do usuário atualmente logado.
-  # Se um cliente for encontrado, busca-se seu carrinho através da relação ClienteVendedores.
-  # Se um vendedor for encontrado, busca-se seus produtos.
-  # Se for um visitante, nada é definido
 
   def home_user
     @produtos = Produto.all

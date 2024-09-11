@@ -1,0 +1,109 @@
+<%= form_with model: @produto, method: :patch, local: true, html: { multipart: true } do |form| %>
+  <div class="vendedor_show">
+    <div class="janela_produto">
+      <div class="barra_azul">
+        <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
+        <%= ". Editar produto" %>
+        <div class="botao-exit">
+          <button type="submit">
+            <%= link_to "X", home_user_path %>
+          </button>
+        </div>
+      </div>
+
+      <div class="janela_produto_data">
+        <div class="imagem">
+          <!-- Exibe a imagem atual do produto -->
+          <% if @produto.imagem.present? %>
+            <%= image_tag "data:image/jpeg;base64,#{Base64.strict_encode64(@produto.imagem)}", alt: @produto.nome %>
+          <% end %>
+          <div class="field coluna">
+            <%= form.file_field :imagem, direct_upload: true %> <!-- Permite upload de nova imagem -->
+          </div>
+        </div>
+
+        <div class="criar_data">
+          <div class="caixa_atributo_valor">
+            <div class="atributo">
+              Nome                    
+            </div>
+            <%= form.text_field :nome %>
+          </div>
+
+          <div class="caixa_atributo_valor">
+            <div class="atributo">
+              Descrição
+            </div>
+            <%= form.text_area :descricao %>
+          </div>
+
+          <div class="caixa_atributo_valor">
+            <div class="atributo">
+              Preço (R$)
+            </div>
+            <%= form.number_field :preco, step: 0.01 %>
+          </div>
+
+          <div class="caixa_atributo_valor">
+            <div class="atributo">
+              Em estoque
+            </div>
+            <%= form.number_field :em_estoque %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="coluna">
+      <div class="janela_review">
+        <div class="barra_azul">
+          <%= ". Promoção?" %>
+          <div class="botao-exit">
+            <button type="submit">
+              <span>X</span>
+            </button>
+          </div>
+        </div>
+        <div class="review_data">
+          <div class="caixa_atributo_valor">
+            <div class="atributo">
+              Desconto (%)
+            </div>
+            <%= form.number_field :desconto, step: 1, min: 0, max: 100 %>
+          </div>
+
+          <div class="caixa_atributo_valor">
+            <div class="atributo">
+              Data de término
+            </div>
+            <%= form.date_field :data_fim %>
+          </div>
+        </div>
+      </div>
+      Deixe o campo "Desconto" como 0 se não quiser fazer uma promoção
+      <br>
+      Nesse caso, também deixe o campo "Data" vazio
+      <div class="actions">
+        <%= form.submit "Editar Produto" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const fileInput = document.querySelector('input[type="file"]');
+  const preview = document.querySelector('.imagem img');
+
+  fileInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  });
+});
+</script>

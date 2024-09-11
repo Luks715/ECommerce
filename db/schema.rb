@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_09_08_232653) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -94,7 +97,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_08_232653) do
     t.bigint "categorium_id", null: false
     t.string "nome", null: false
     t.text "descricao", null: false
-    t.float "nota", default: 0.0
     t.decimal "preco", precision: 10, scale: 2, null: false
     t.integer "em_estoque", null: false
     t.binary "imagem"

@@ -6,20 +6,18 @@ Rails.application.routes.draw do
 
   resources :carrinhos
   resources :categoria
-  resources :clientes
+  resources :clientes do
+    member do
+      get 'add_saldo'  # Para exibir o formulário de adicionar saldo
+      patch 'add_saldo' # Para processar a adição de saldo
+    end
+  end
   resources :vendedors
   resources :user
   resources :review_produtos
   resources :review_vendedors
   resources :produtos
 
-  # Mudança para exibir a imagem depois de criado
-  resources :produtos do
-    member do
-      get 'exibir_imagem'
-    end
-  end
-  
   post 'criar_pedido', to: 'pedidos#create'
 
   delete 'pedidos/destroy', to: 'pedidos#destroy', as: 'pedidos_destroy'
@@ -27,6 +25,8 @@ Rails.application.routes.draw do
   get 'acompanhar_entrega', to: 'pages#acompanhar_entrega', as: 'acompanhar_entrega'
   get 'home_user', to: 'pages#home_user', as: 'home_user'
   get 'search', to: 'pages#search', as: 'search_pages'
+
+  patch 'clientes/:id/add_saldo', to: 'clientes#add_saldo', as: 'add_saldo'
 
   root to: "pages#home_user"
 

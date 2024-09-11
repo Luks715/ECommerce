@@ -6,15 +6,19 @@ class CarrinhosController < ApplicationController
 
   def update
     if params[:remove_selected]
+      # Lógica para remover pedidos do carrinho (Usada somente por Clientes)
       if params[:carrinho].present? && params[:carrinho][:pedidos_ids].present?
         pedidos_ids = params[:carrinho][:pedidos_ids]
-        Pedido.where(id: pedidos_ids).destroy_all
-        redirect_to carrinho_path(@carrinho), notice: 'Pedidos removidos com sucesso.'
-      else
-        flash[:alert] = "Nenhum pedido foi selecionado."
+
+        if Pedido.destroy_pedidos(pedidos_ids)
+          redirect_to carrinho_path(@carrinho), notice: 'Pedidos removidos com sucesso.'
+        else
+          flash[:alert] = "Nenhum pedido foi selecionado."
+        end
       end
+
     elsif params[:finalize_purchase]
-      # Lógica para finalizar a compra do carrinho
+      # Lógica para finalizar a compra do carrinho (Usada somente por Clientes)
       if @carrinho.efetuar_pagamento
         redirect_to root_path, notice: 'Compra finalizada com sucesso.'
       else
@@ -22,20 +26,16 @@ class CarrinhosController < ApplicationController
       end
 
     elsif params[:send_purchases]
+      # Lógica para enviar compras para o cliente (Usada somente por Vendedores)
       if params[:carrinho].present? && params[:carrinho][:pedidos_ids].present?
         pedidos_ids = params[:carrinho][:pedidos_ids]
 
-        array_literal = "{#{pedidos_ids.join(',')}}"
-
-        sanitized_ids = ActiveRecord::Base.sanitize_sql_array(["SELECT update_pedidos_enviados(?)", array_literal])
-        ActiveRecord::Base.connection.execute(sanitized_ids)
-
-        # Código Antigo (Comentado)
-        # Pedido.where(id: pedidos_ids).update_all(foi_enviado: true)
-      else
-        flash[:alert] = "Nenhum pedido foi selecionado."
+        if Pedido.enviar(pedidos_ids)
+           redirect_to root_path, notice: 'Compras enviadas para o cliente'
+        else
+          flash[:alert] = "Nenhum pedido foi selecionado."
+        end
       end
-      redirect_to root_path, notice: 'Compras enviadas para o cliente'
     end
   end
 

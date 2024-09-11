@@ -7,10 +7,6 @@ class Produto < ApplicationRecord
   has_many :cliente_produtos, dependent: :destroy
   has_many :clientes, through: :cliente_produtos
 
-  has_one_attached :imagem  # Mudança para preview da imagem
-
-  before_save :convert_image_to_binary # Mudança para exibir a imagem depois de criado
-
   validates :nome, presence: true
   validates :descricao, presence: true
   validates :preco, presence: true
@@ -19,12 +15,6 @@ class Produto < ApplicationRecord
 
   validate :data_fim_deve_ser_futura, if: -> { data_fim.present? }
 
-  # Mudança para exibir a imagem depois de criado
-  def convert_image_to_binary
-    if self.imagem.respond_to?(:read)
-      self.imagem = self.imagem.read
-    end
-  end
 
   def preco_promocional
     if self.emPromocao
@@ -49,8 +39,13 @@ class Produto < ApplicationRecord
   end
 
   def data_fim_deve_ser_futura
-    if dataFim <= Date.today
+    if data_fim <= Date.today
       errors.add(:data_fim, "deve ser uma data futura.")
     end
+  end
+
+  def apagar_produto
+    ActiveRecord::Base.connection.execute("SELECT apagar_produto(#{self.id})")
+    true
   end
 end

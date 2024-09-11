@@ -1,5 +1,5 @@
 class ProdutosController < ApplicationController
-  before_action :set_produto, only: [:show, :exibir_imagem, :edit, :update, :destroy]
+  before_action :set_produto, only: [:show, :edit, :update, :destroy]
   def index
     @produtos = Produto.all
   end
@@ -8,29 +8,18 @@ class ProdutosController < ApplicationController
     @vendedor = @produto.vendedor
   end
 
-  def exibir_imagem
-    # send_data produto.imagem, type: produto.imagem.content_type, disposition: 'inline'
-    
-    # Mudança para exibir a imagem depois de criado
-    if @produto.imagem.present?
-      send_data @produto.imagem, type: 'image/png', disposition: 'inline'
-    else
-      # Exibir uma imagem padrão, caso a imagem não exista
-      redirect_to asset_path('windows_!_icon.png')
-    end
-  end
-
   def new
+    @produto = Produto.new
     @vendedor = current_user.vendedor
     @categoria = Categorium.all
-    @produto = Produto.new
   end
 
   def create
     @produto = current_user.vendedor.produtos.build(produto_params)
-    
-    # Verificação do valor da imagem
-    Rails.logger.debug "Imagem recebida: #{params[:produto][:imagem].inspect}"
+
+    if params[:produto][:imagem].present?
+      @produto.imagem = params[:produto][:imagem].read
+    end
 
     if @produto.save
       redirect_to vendedor_path(@produto.vendedor), notice: 'Produto criado com sucesso.'
@@ -45,6 +34,10 @@ class ProdutosController < ApplicationController
   end
 
   def update
+    if params[:produto][:imagem].present?
+      @produto.imagem = params[:produto][:imagem].read
+    end
+
     if @produto.update(produto_params)
       redirect_to @produto, notice: 'Produto atualizado com sucesso.'
     else
@@ -53,10 +46,10 @@ class ProdutosController < ApplicationController
   end
 
   def destroy
-    if current_user == @produto.vendedor.user
-      ActiveRecord::Base.connection.execute("SELECT apagar_produto(#{@produto.id})")
+    if @produto.apagar_produto == true
+      redirect_to @produto.vendedor, notice: 'Produto excluído com sucesso'
     else
-      redirect_to root_path, alert: 'Você não tem permissão para excluir este produto.'
+      redirect_to @produto, alert: 'Falha em excluir o produto'
     end
   end
 

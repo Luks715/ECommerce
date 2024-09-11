@@ -8,11 +8,6 @@
                     <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
                             
                     <%=". Review de #{review.cliente.user.nome}"%>
-                    <div class="botao-exit">
-                        <button type="submit">
-                            <span>X</span>
-                        </button>
-                    </div>
                 </div>
 
                 <div class="review_data">
@@ -40,17 +35,7 @@
                 <div class="barra_azul">
                     <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
                     
-                    <% if review.produto.nil? %>
-                        <%=". #{review.vendedor.user.nome}"%>
-                    <% else %>
-                        <%=". #{review.produto.nome}"%>
-                    <% end %>
-                    <div class="botao-exit">
-                        <button type="submit">
-                            <span>X</span>
-                        </button>
-                    </div>
-
+                    <%=". #{review.produto.nome}"%>
                 </div>
 
                 <div class="review_data">

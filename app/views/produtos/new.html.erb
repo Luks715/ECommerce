@@ -1,5 +1,4 @@
-Caso não queira deixar seu produto em promoção, coloque um zero no campo Desconto e deixe o campo Data vazio
-<%= form_with model: @produto, method: :post, local: true, html: { multipart: true } do |form| %>  <!-- Mudança para preview da imagem -->
+<%= form_with model: @produto, method: :post, local: true do |form| %>  <!-- Mudança para preview da imagem -->
     <div class="vendedor_show">
         <div class="janela_produto">
             <div class="barra_azul">
@@ -38,11 +37,10 @@ Caso não queira deixar seu produto em promoção, coloque um zero no campo Desc
 
                     <div class="caixa_atributo_valor">
                         <div class="atributo">
-                            Categoria
+                        Categoria
                         </div>
                         <%= form.collection_select :categorium_id, @categoria, :id, :nome, prompt: "Selecione uma categoria" %>
                     </div>
-
 
                     <div class="caixa_atributo_valor">
                         <div class="atributo">
@@ -97,13 +95,6 @@ Caso não queira deixar seu produto em promoção, coloque um zero no campo Desc
         </div>
     </div>
 <% end %>
-
-<div class="footer">
-    <div>
-        <img src="<%= asset_path('windows-logo.png') %>" alt="logo windows">
-    </div>
-</div>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   const fileInput = document.querySelector('input[type="file"]');

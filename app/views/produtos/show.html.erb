@@ -2,7 +2,7 @@
     <div class="janela_produto">
         <div class="barra_azul">
             <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
-            <%=". Produto"%>
+            <%=". Ver produtos "%>
             <div class="botao-exit">
                 <%= form_with url: home_user_path, method: :get, local: true do %>
                     <button type="submit">
@@ -15,7 +15,7 @@
         <div class="janela_produto_data">
             <div class="imagem">
                 <% if @produto.imagem.present? %>
-                    <%= image_tag exibir_imagem_produto_path(@produto), alt: @produto.nome %>
+                   <%= image_tag "data:image/jpeg;base64,#{Base64.strict_encode64(@produto.imagem)}", alt: @produto.nome %>
                 <% else %>
                     <img src="<%= asset_path('windows_!_icon.png') %>" alt="Imagem do Produto">
                 <% end %>
@@ -122,7 +122,7 @@
                                 <%= form.number_field :quantidade, name:"pedido[quantidade]", min: 1 %>
                             </div>
                             <div class="caixa_atributo_valor">
-                                <%= form.submit 'Comprar', class: 'botao-comprar' %>
+                                <%= form.submit 'Adicionar ao Carrinho', class: 'botao-comprar' %>
                             </div>
                         <% end %>
                     <% end %>
@@ -134,11 +134,5 @@
     <div class="janela_reviews">
         Reviews 
         <%= render partial: 'review_produtos/index', locals: { produto: @produto} %>
-    </div>
-</div>
-
-<div class="footer">
-    <div>
-        <img src="<%= asset_path('windows-logo.png') %>" alt="logo windows">
     </div>
 </div>

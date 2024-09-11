@@ -1,7 +1,7 @@
 <div class="janela_carrinho">
     <div class="barra_azul">
         <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
-        <%=". Pedidos enviados"%>
+        <%=".  Já enviados"%>
         <div class="botao-exit">
             <%= form_with url: home_user_path, method: :get, local: true do %>
                 <button type="submit">
@@ -12,10 +12,10 @@
     </div>
 
     <div class="historico_content">
-        <% historico = Pedido.where(cliente: current_user.cliente, foi_pago: true, foi_enviado: true) %>
+        <% pedidos_enviados = Pedido.where(cliente: current_user.cliente, foi_pago: true, foi_enviado: true) %>
         
         <%= form_with url: pedidos_destroy_path, method: :delete, local: true do %>
-            <table class="tabela_registros">
+            <table class="tabela">
                 <tr>
                     <th style="width: 10%; padding: 0 0 0 5px;">Recebidos</th>
                     <th style="width: 22.5%; padding: 0 0 0 5px;">Produto</th>
@@ -24,7 +24,7 @@
                     <th style="width: 22.5%; padding: 0 0 0 5px;">Data de chegada</th>
                 </tr>
 
-                <% historico.each do |registro| %>
+                <% pedidos_enviados.each do |registro| %>
                     <tr>
                         <td><%= check_box_tag "pedidos_ids[]", registro.id %></td>
                         <td><%= registro.produto.nome %></td>
@@ -39,11 +39,5 @@
                 <%= submit_tag "Recebidos" %>
             </div>
         <% end %>
-    </div>
-</div>
-
-<div class="footer">
-    <div>
-        <img src="<%= asset_path('windows-logo.png') %>" alt="logo windows">
     </div>
 </div>

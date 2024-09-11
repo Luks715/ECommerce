@@ -7,8 +7,8 @@ class Vendedor < ApplicationRecord
   has_many :produtos, dependent: :destroy
   accepts_nested_attributes_for :produtos, reject_if: :all_blank, allow_destroy: true
 
-  validates :email_para_contato, presence: true
-  validates :cnpj, uniqueness: true
+  validates :email_para_contato, uniqueness: true, presence: true, if: -> { user.Cliente? == false }
+  validates :cnpj, uniqueness: true, presence: true, if: -> { user.Cliente? == false }
 
   def totalVendas
     Historico.where(vendedor_nome: self.user.nome).count

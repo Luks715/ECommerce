@@ -8,7 +8,7 @@ class Cliente < ApplicationRecord
   has_many :vendedor, through: :cliente_vendedores, source: :cliente_vendedores_table
 
   validates :saldo, numericality: { greater_than_or_equal_to: 0.00 }
-  validates :cpf, uniqueness: true
+  validates :cpf, uniqueness: true, presence: true, if: -> { user.Vendedor? == false }
 
   def compras
     Historico.where(cliente_nome: self.user.nome).count

@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[7.1]
       t.string :telefone, null: false
       t.string :endereco, null: false
       t.integer :role, default: 0, null: false
+
       t.binary :imagem
 
       t.timestamps

@@ -40,3 +40,17 @@
     display: flex;
     flex-direction: column;
 }
+
+.Add-Saldo .janela_review{
+    padding: 12px;
+    width: 350px;
+    height: 90px;
+
+    margin: 300px 0 0 600px;
+
+    background-color: #bdbdbd;
+    box-shadow: inset 2px 2px #fff, 2px 2px #000;
+
+    display: flex;
+    flex-direction: column;
+}

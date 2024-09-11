@@ -2,27 +2,27 @@
   <div class="janela_review">
     <div class="barra_azul">
       <img src="<%= asset_path('icone-windows.jpg') %>" alt="iconezinho windows">
-      <%= ". Atualizar o seu contato" %>
+      <%= ". Adicionar saldo à conta"%>
 
       <div class="botao-exit">
         <button type="submit">
-          <%= link_to "X", @vendedor %>       
+          <%= link_to "X", @cliente %>       
         </button>
       </div>
     </div>
 
     <div class="review_data">
-      <%= form_with model: @vendedor, method: :patch, local: true do |form| %>
+      <%= form_with url: add_saldo_path(@cliente), method: :patch, local: true do |form| %>
 
         <div class="caixa_atributo_valor">
           <div class="atributo">
-            Novo contato:
+            Valor a adicionar:
           </div>
-          <%= form.text_field :email_para_contato %>
+          <%= form.number_field :valor, step: 0.01, min: 0 %>
         </div>
 
         <div class="actions">
-          <%= form.submit "Mudar email" %>
+          <%= form.submit "Adicionar Saldo" %>
         </div>
       <% end %>
     </div>
