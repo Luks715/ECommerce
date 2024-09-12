@@ -21,8 +21,8 @@
                 <% end %>
 
                 <div class="interacao">
+                    <%= link_to "Conheça o vendedor", vendedor_path(@vendedor)%>
                     <% if user_signed_in? && current_user.Cliente? %>
-                        <%= link_to "Conheça o vendedor", vendedor_path(@vendedor)%>
                         <% if Historico.find_by(cliente_nome: current_user.nome, produto_nome: @produto.nome, review_do_produto: false).present? %>
                             <%= link_to "Escreva uma review", new_review_produto_path(produto_id: @produto.id) %>
                         <% end %>

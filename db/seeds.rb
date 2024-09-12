@@ -7,8 +7,11 @@ end
 
 puts "Categorias criadas com sucesso"
 
+
+
 # Criação dos 10 Users (5 Clientes e 5 Usuários)
 # Todos os telefones, endereços, CPFs e CNPJs foram criados pelo ChatGPT
+#
 users_data = [
   {nome: 'Carlos Almeida', email: 'carlos.almeida@gmail.com', telefone: '(61) 91234-5678',
    endereco: 'Rua das Flores, 123, Belo Horizonte, MG', password: 'senha123', password_confirmation: 'senha123',
@@ -51,6 +54,7 @@ users_data = [
   {nome: 'Rafael Sousa', email: 'rafael.sousa@example.com', telefone: '(61) 96343-6578',
    endereco: 'Rua Liberdade, 400, Lisboa, Portugal', password: 'senha123', password_confirmation: 'senha123',
    role: 'Vendedor', vendedor_attributes: { cnpj: '76.543.210/0001-62', email_para_contato: 'produtos_gerais@gmail.com'}},
+
 ]
 
 users_data.each do |user_data|
@@ -106,11 +110,15 @@ end
 
 puts "Produtos criados com sucesso"
 
+
 # Criando reviews
 
 review_produtos = [
     {nota: 1, comentario: "o teflon saiu muito rápido!",
     cliente: Cliente.find_by(cpf: '123.456.789-73'), produto: Produto.find_by(nome: 'Jogo de Panelas')},
+
+    {nota: 1, comentario: "Não passa café por nada!!",
+    cliente: Cliente.find_by(cpf: '123.456.789-73'), produto: Produto.find_by(nome: 'Cafeteira Elétrica')},
 
     {nota: 2, comentario: "Péssimo livro, não gostei do final",
     cliente: Cliente.find_by(cpf: '132.546.978-26'), produto: Produto.find_by(nome: 'A Revolução dos Bichos')},
@@ -130,7 +138,7 @@ review_produtos.each do |review|
 end
 
 review_vendedores = [
-    {nota: 1, comentario: "O vendedor nunciou um produto defeituoso e não respondeu meus emails",
+    {nota: 1, comentario: "O vendedor anunciou dois produtos defeituoso e não respondeu meus emails",
     cliente: Cliente.find_by(cpf: '123.456.789-73'), vendedor: Vendedor.find_by(cnpj: '76.543.210/0001-62')},
 
     {nota: 2, comentario: "O livro chegou amassado, pelo menos ofereceu trocar e enviou outro",
@@ -153,11 +161,12 @@ end
 puts "Reviews Criadas com Sucesso"
 
 pedidos_data = [
-  { carrinho_id: 6, cliente_id: 1, produto: Produto.find_by(nome: 'O Senhor dos Anéis'), quantidade: 2, foi_pago: true, foi_enviado: true, data_chegada: Date.today + 14.days },
-  { carrinho_id: 1, cliente_id: 1, produto: Produto.find_by(nome: 'Smartphone X12'), quantidade: 3, foi_pago: false, foi_enviado: false, data_chegada: Date.today + 14.days },
-  { carrinho_id: 2, cliente_id: 2, produto: Produto.find_by(nome: 'Jaqueta de Couro'), quantidade: 1, foi_pago: false, foi_enviado: false, data_chegada: Date.today + 14.days },
-  { carrinho_id: 2, cliente_id: 2, produto: Produto.find_by(nome: 'Cafeteira Elétrica'), quantidade: 1, foi_pago: true, foi_enviado: false, data_chegada: Date.today + 14.days },
-  { carrinho_id: 7, cliente_id: 2, produto: Produto.find_by(nome: 'Metallica - Black Album'), quantidade: 1, foi_pago: true, foi_enviado: true, data_chegada: Date.today + 14.days }
+  { carrinho_id: 1, cliente_id: 6, produto: Produto.find_by(nome: 'O Senhor dos Anéis'), quantidade: 2, foi_pago: true, foi_enviado: false, data_chegada: Date.today + 14.days },
+  { carrinho_id: 1, cliente_id: 7, produto: Produto.find_by(nome: 'O Senhor dos Anéis'), quantidade: 1, foi_pago: true, foi_enviado: false, data_chegada: Date.today + 14.days },
+  { carrinho_id: 8, cliente_id: 8, produto: Produto.find_by(nome: 'Smartphone X12'), quantidade: 2, foi_pago: false, foi_enviado: false, data_chegada: Date.today + 14.days },
+  { carrinho_id: 9, cliente_id: 9, produto: Produto.find_by(nome: 'Jaqueta de Couro'), quantidade: 3, foi_pago: false, foi_enviado: false, data_chegada: Date.today + 14.days },
+  { carrinho_id: 5, cliente_id: 8, produto: Produto.find_by(nome: 'Cafeteira Elétrica'), quantidade: 1, foi_pago: true, foi_enviado: false, data_chegada: Date.today + 14.days },
+  { carrinho_id: 2, cliente_id: 7, produto: Produto.find_by(nome: 'Metallica - Black Album'), quantidade: 1, foi_pago: true, foi_enviado: true, data_chegada: Date.today + 14.days }
 ]
 
 pedidos_data.each do |pedido_data|
@@ -184,13 +193,16 @@ historico = [
 
 
 
-   {cliente_nome: 'Carlos Almeida', vendedor_nome: 'Rodrigo Carvalho', produto_nome: 'O Senhor dos Anéis', quantidade: 3,
+   {cliente_nome: 'Carlos Almeida', vendedor_nome: 'Rodrigo Carvalho', produto_nome: 'O Senhor dos Anéis', quantidade: 2,
    data_compra: Date.today, review_do_produto: false, review_do_vendedor: false},
 
-   {cliente_nome: 'Ana Santos', vendedor_nome: 'Fernando Silva', produto_nome: 'Metallica - Black Album', quantidade: 3,
+   {cliente_nome: 'Ana Santos', vendedor_nome: 'Rafael Sousa', produto_nome: 'O Senhor dos Anéis', quantidade: 1,
    data_compra: Date.today, review_do_produto: false, review_do_vendedor: false},
 
-   {cliente_nome: 'Ana Santos', vendedor_nome: 'Rafael Sousa', produto_nome: 'Cafeteira Elétrica', quantidade: 3,
+   {cliente_nome: 'Mariana Oliveira', vendedor_nome: 'Rafael Sousa', produto_nome: 'Cafeteira Elétrica', quantidade: 1,
+   data_compra: Date.today, review_do_produto: false, review_do_vendedor: false},
+
+   {cliente_nome: 'Ana Santos', vendedor_nome: 'Fernando Silva', produto_nome: 'Metallica - Black Album', quantidade: 1,
    data_compra: Date.today, review_do_produto: false, review_do_vendedor: false}
 ]
 
